@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Track Complaint — JanSanket</title>
+    <link rel="stylesheet" href="css/main.css" />
+    <style>
+        .track-layout {
+            display: grid;
+            grid-template-columns: 1fr 360px;
+            gap: 28px;
+            padding: 32px 0;
+        }
+
+        .track-card {
+            background: var(--color-surface);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-xl);
+            overflow: hidden;
+        }
+
+        .track-card-header {
+            padding: 24px 28px;
+            border-bottom: 1px solid var(--color-border);
+            background: var(--color-bg-2);
+        }
+
+        .status-pulse {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .pulse-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        .pulse-dot.active {
+            background: var(--color-accent);
+        }
+
+        .pulse-dot.done {
+            background: var(--color-green);
+            animation: none;
+        }
+
+        .pulse-dot.rejected {
+            background: var(--color-red);
+            animation: none;
+        }
+
+        /* Big Tracker */
+        .big-tracker {
+            padding: 32px 28px;
+        }
+
+        .big-steps {
+            display: flex;
+            gap: 0;
+            margin-bottom: 32px;
+            overflow-x: auto;
+            padding-bottom: 4px;
+        }
+
+        .big-step {
+            flex: 1;
+            min-width: 100px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+        }
+
+        .big-step:not(:last-child)::after {
+            content: '';
+            position: absolute;
+            top: 24px;
+            left: 50%;
+            right: -50%;
+            height: 3px;
+            background: var(--color-border);
+            z-index: 0;
+            transition: background 0.5s;
+        }
+
+        .big-step.done::after {
+            background: var(--color-green);
+        }
+
+        .big-step-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            border: 3px solid var(--color-border);
+            background: var(--color-surface);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            z-index: 1;
+            position: relative;
+            transition: all 0.4s;
+            margin-bottom: 10px;
+        }
+
+        .big-step.done .big-step-icon {
+            border-color: var(--color-green);
+            background: var(--color-green-pale);
+            box-shadow: 0 0 0 4px hsla(145, 65%, 42%, 0.15);
+        }
+
+        .big-step.active .big-step-icon {
+            border-color: var(--color-accent);
+            background: var(--color-accent-pale);
+            animation: pulse 2s infinite;
+            box-shadow: 0 0 0 4px var(--color-accent-glow);
+        }
+
+        .big-step.rejected .big-step-icon {
+            border-color: var(--color-red);
+            background: var(--color-red-pale);
+        }
+
+        .big-step-label {
+            font-size: 0.72rem;
+            text-align: center;
+            font-weight: 600;
+            color: var(--color-text-3);
+            line-height: 1.3;
+        }
+
+        .big-step.done .big-step-label {
+            color: var(--color-green);
+        }
+
+        .big-step.active .big-step-label {
+            color: var(--color-accent);
+        }
+
+        .big-step.rejected .big-step-label {
+            color: var(--color-red);
+        }
+
+        /* Countdown */
+        .countdown-bar {
+            height: 6px;
+            border-radius: 3px;
+            background: var(--color-border);
+            overflow: hidden;
+            margin: 8px 0;
+        }
+
+        .countdown-fill {
+            height: 100%;
+            border-radius: 3px;
+            background: var(--color-green);
+            transition: width 0.4s;
+        }
+
+        .countdown-fill.urgent {
+            background: var(--color-amber);
+        }
+
+        .countdown-fill.overdue {
+            background: var(--color-red);
+        }
+
+        @media (max-width: 900px) {
+            .track-layout {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="container">
+            <a href="dashboard.html" class="nav-logo">
+                <div class="logo-icon">🛡️</div>
+                JanSanket
+            </a>
+            <div class="nav-actions" style="margin-left:auto;">
+                <button class="nav-bell" id="navBell">🔔<span class="notif-badge"></span></button>
+                <a href="dashboard.html" class="btn btn-ghost btn-sm">← Back</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="notif-panel" id="notifPanel">
+        <div class="notif-panel-header">
+            <h4>Notifications</h4>
+            <span class="notif-mark-all" id="markAllRead">Mark all read</span>
+        </div>
+        <div class="notif-list" id="notifList"></div>
+    </div>
+
+    <div class="page-wrapper">
+        <div class="container">
+            <div id="mainContent" style="display:flex;align-items:center;justify-content:center;min-height:60vh;">
+                <div style="text-align:center;color:var(--color-text-3);">
+                    <div style="font-size:3rem;margin-bottom:12px;">📡</div>
+                    <p>Loading complaint data…</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="module">
+        import { ComplaintStore, Session, NotifStore, STATUS_STEPS } from './js/store.js';
+        import { initNotifPanel, updateBadge, formatDate, daysLeft, timeAgo } from './js/notification.js';
+        import { generateOrderDocument } from './js/ai-analysis.js';
+        import { requireLogin } from './js/auth.js';
+
+        requireLogin();
+        initNotifPanel();
+
+        const params = new URLSearchParams(window.location.search);
+        const cid = params.get('id');
+        const user = Session.get();
+
+        if (!cid) {
+            document.getElementById('mainContent').innerHTML = `<div style="text-align:center;padding:60px 20px;"><div style="font-size:3rem;margin-bottom:12px;">😕</div><h3>No complaint ID provided</h3><a href="dashboard.html" class="btn btn-primary" style="margin-top:20px;">← Dashboard</a></div>`;
+        } else {
+            render();
+            setInterval(render, 8000);   // auto-refresh
+        }
+
+        async function render() {
+            let c = ComplaintStore.getById(cid);
+
+            try {
+                const res = await fetch(`/api/complaints/${encodeURIComponent(cid)}`, {
+                    headers: { 'x-user-id': user ? user.id : '' }
+                });
+                if (res.ok) {
+                    const serverData = await res.json();
+                    if (serverData && serverData.id) c = serverData;
+                }
+            } catch(e) {}
+
+            if (!c) {
+                document.getElementById('mainContent').innerHTML = `<div style="text-align:center;padding:60px 20px;"><h3>Complaint not found</h3><a href="dashboard.html" class="btn btn-primary" style="margin-top:20px;">← Dashboard</a></div>`;
+                return;
+            }
+
+            // Check Ownership: allow access if userId, voterId, or phone matches (or if user is admin/authority)
+            const userVoterId = user ? (user.voterId || '').toUpperCase() : '';
+            const userPhone = user ? user.phone : '';
+            const isOwner = user && (
+                c.userId === user.id ||
+                (c.voterId && userVoterId && c.voterId.toUpperCase() === userVoterId) ||
+                (c.phone && userPhone && c.phone === userPhone)
+            );
+
+            if (user && user.role === 'citizen' && !isOwner) {
+                document.getElementById('mainContent').innerHTML = `<div style="text-align:center;padding:60px 20px;"><h3>Access Denied</h3><p>This complaint does not belong to your account.</p><a href="dashboard.html" class="btn btn-primary" style="margin-top:20px;">← Dashboard</a></div>`;
+                return;
+            }
+
+            const stepIndex = STATUS_STEPS.findIndex(s => s.key === c.status);
+            const isRejected = c.status === 'rejected';
+            const isResolved = c.status === 'resolved';
+            const isOverdue = ComplaintStore.isDeadlinePassed(c);
+            const deadlineDays = daysLeft(c.deadline);
+            const deadlinePct = c.deadline ? Math.max(0, Math.min(100, (deadlineDays / 6) * 100)) : 0;
+
+            document.getElementById('mainContent').innerHTML = `
+        <div>
+          <!-- Top Row -->
+          <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-bottom:24px;">
+            <div>
+              <div class="section-tag">📦 Complaint Tracking</div>
+              <h2>${c.heading}</h2>
+              <div style="font-size:0.85rem;color:var(--color-text-2);margin-top:4px;">ID: <span style="font-family:monospace;color:var(--color-accent);">${c.id}</span> · Filed ${timeAgo(c.createdAt)}</div>
+            </div>
+            <div style="display:flex;gap:10px;flex-wrap:wrap;">
+              ${c.ragTag === 'green' ? `<button onclick="download()" class="btn btn-ghost btn-sm">📄 Download Order</button>` : ''}
+              ${isOverdue && !c.dataShareConsent ? `<a href="lawsuit.html?id=${c.id}" class="btn btn-danger btn-sm">⚖️ Take Legal Action</a>` : ''}
+            </div>
+          </div>
+
+          <div class="track-layout">
+            <!-- Left: Main Tracker -->
+            <div>
+              <div class="track-card">
+                <div class="track-card-header">
+                  <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;">
+                    <div>
+                      <div class="status-pulse">
+                        <div class="pulse-dot ${isResolved ? 'done' : isRejected ? 'rejected' : 'active'}"></div>
+                        <span style="font-weight:700;font-size:1rem;">${statusLabel(c.status)}</span>
+                      </div>
+                      <p style="font-size:0.82rem;margin-top:4px;">${statusDesc(c.status, c.aiReason)}</p>
+                    </div>
+                    ${ragBadgeHtml(c.ragTag)}
+                  </div>
+                  ${c.deadline && !isResolved && !isRejected ? `
+                    <div style="margin-top:16px;">
+                      <div style="display:flex;justify-content:space-between;font-size:0.78rem;color:var(--color-text-3);margin-bottom:4px;">
+                        <span>Authority Deadline</span>
+                        <span style="font-weight:700;color:${isOverdue ? 'var(--color-red)' : deadlineDays <= 2 ? 'var(--color-amber)' : 'var(--color-text)'};">
+                          ${isOverdue ? '⚠️ OVERDUE' : deadlineDays + ' day' + (deadlineDays === 1 ? '' : 's') + ' remaining'}
+                        </span>
+                      </div>
+                      <div class="countdown-bar">
+                        <div class="countdown-fill ${isOverdue ? 'overdue' : deadlineDays <= 2 ? 'urgent' : ''}" style="width:${deadlinePct}%;"></div>
+                      </div>
+                      <div style="font-size:0.72rem;color:var(--color-text-3);">Deadline: ${formatDate(c.deadline)}</div>
+                    </div>
+                  ` : ''}
+                </div>
+
+                <!-- Big Delivery Tracker -->
+                <div class="big-tracker">
+                  <div class="big-steps">
+                    ${STATUS_STEPS.map((step, i) => {
+                const isDone = !isRejected && i < stepIndex;
+                const isActive = !isRejected && i === stepIndex;
+                const cls = isDone ? 'done' : isActive ? 'active' : isRejected && i === 0 ? 'rejected' : '';
+                return `
+                        <div class="big-step ${cls}">
+                          <div class="big-step-icon">${isDone ? '✓' : step.icon}</div>
+                          <div class="big-step-label">${step.label}</div>
+                        </div>
+                      `;
+            }).join('')}
+                    ${isRejected ? '<div class="big-step rejected"><div class="big-step-icon">❌</div><div class="big-step-label">Rejected</div></div>' : ''}
+                  </div>
+
+                  <!-- Step Descriptions -->
+                  <div style="background:var(--color-bg-2);border-radius:var(--radius-md);padding:16px 20px;margin-bottom:24px;">
+                    ${STATUS_STEPS.map((step, i) => {
+                const isDone = !isRejected && i <= stepIndex;
+                if (!isDone && i !== stepIndex + 1) return '';
+                const isCurrentNext = !isRejected && i === stepIndex + 1;
+                return `
+                        <div style="display:flex;align-items:flex-start;gap:12px;${isCurrentNext ? 'opacity:0.45;' : ''}">
+                          <span style="font-size:1.2rem;flex-shrink:0;">${isDone && !isCurrentNext ? '✅' : step.icon}</span>
+                          <div>
+                            <div style="font-weight:600;font-size:0.88rem;">${step.label}</div>
+                            <div style="font-size:0.8rem;color:var(--color-text-2);">${step.desc}</div>
+                          </div>
+                          ${isDone && !isCurrentNext ? '<span class="badge badge-green" style="margin-left:auto;flex-shrink:0;">Done</span>' : ''}
+                          ${i === stepIndex && !isCurrentNext ? '<span class="badge badge-amber" style="margin-left:auto;flex-shrink:0;">Active</span>' : ''}
+                        </div>
+                      `;
+            }).filter(Boolean).join('<div style="height:1px;background:var(--color-border);margin:10px 0;"></div>')}
+                  </div>
+
+                  ${c.adminNote ? `<div style="background:var(--color-accent-pale);border-left:3px solid var(--color-accent);border-radius:var(--radius-sm);padding:12px 16px;font-size:0.85rem;margin-bottom:16px;"><strong>Admin Note:</strong> ${c.adminNote}</div>` : ''}
+                  ${c.authorityNote ? `<div style="background:var(--color-green-pale);border-left:3px solid var(--color-green);border-radius:var(--radius-sm);padding:12px 16px;font-size:0.85rem;margin-bottom:16px;"><strong>Authority Response:</strong> ${c.authorityNote}</div>` : ''}
+
+                  ${isOverdue && !c.dataShareConsent ? `
+                    <div style="background:var(--color-red-pale);border:1px solid hsla(0,85%,55%,0.3);border-radius:var(--radius-md);padding:20px;text-align:center;">
+                      <div style="font-size:2rem;margin-bottom:8px;">⚠️</div>
+                      <h4>Authority Has Not Responded</h4>
+                      <p style="font-size:0.85rem;margin-top:6px;margin-bottom:16px;">The 6-day deadline has passed with no action. You can choose to escalate or stay anonymous.</p>
+                      <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;">
+                        <a href="lawsuit.html?id=${c.id}" class="btn btn-danger">⚖️ Take Legal Action</a>
+                        <button class="btn btn-ghost" onclick="stayAnonymous('${c.id}')">🛡️ Stay Anonymous</button>
+                      </div>
+                    </div>
+                  ` : ''}
+
+                  ${c.dataShareConsent === 'agreed' ? `<div style="background:var(--color-blue-pale);border-radius:var(--radius-md);padding:16px;text-align:center;font-size:0.88rem;"><a href="lawsuit.html?id=${c.id}" class="btn btn-sm btn-ghost">⚖️ View Lawsuit Guide →</a></div>` : ''}
+                  ${c.dataShareConsent === 'declined' ? `<div style="background:var(--color-green-pale);border-radius:var(--radius-md);padding:16px;text-align:center;font-size:0.88rem;color:var(--color-green);">🛡️ Staying anonymous. Complaint escalated to higher authority.</div>` : ''}
+                </div>
+              </div>
+            </div>
+
+            <!-- Right: Details + Timeline -->
+            <div style="display:flex;flex-direction:column;gap:16px;">
+              <!-- Complaint Details -->
+              <div class="card">
+                <div style="font-size:0.75rem;font-weight:700;color:var(--color-text-3);text-transform:uppercase;margin-bottom:14px;">Complaint Details</div>
+                ${detailRow('Department', c.department)}
+                ${detailRow('Filed By', `<span style="font-family:monospace;">${c.anonymousId}</span>`)}
+                ${detailRow('Location', c.location || '—')}
+                ${detailRow('Filed On', formatDate(c.createdAt))}
+                ${c.files?.length ? detailRow('Attachments', c.files.join(', ')) : ''}
+              </div>
+
+              <!-- Full Timeline -->
+              <div class="card">
+                <div style="font-size:0.75rem;font-weight:700;color:var(--color-text-3);text-transform:uppercase;margin-bottom:14px;">📜 Activity Log</div>
+                <div class="timeline">
+                  ${[...(c.timeline || [])].reverse().map(t => `
+                    <div class="timeline-item">
+                      <div class="timeline-dot done">✓</div>
+                      <div class="timeline-content">
+                        <div class="timeline-title">${stepLabel(t.step)}</div>
+                        <div class="timeline-desc">${t.note}</div>
+                        <div class="timeline-time">${formatDate(t.timestamp)}</div>
+                      </div>
+                    </div>
+                  `).join('')}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+
+            window.download = () => generateOrderDocument(c);
+            window.stayAnonymous = (cid) => {
+                const { ComplaintStore, Session, NotifStore } = window.__cs || {};
+                // direct import not available in onclick, handled via module above
+            };
+        }
+
+        window.stayAnonymous = (cid) => {
+            const { NotifStore: NS } = { NotifStore };
+            ComplaintStore.update(cid, { dataShareConsent: 'declined' });
+            ComplaintStore.addTimelineEvent(cid, 'authority_review', 'Citizen chose to remain anonymous. Escalated to higher authority.');
+            NotifStore.push(user.id, { title: '🛡️ Remaining Anonymous', desc: 'Your complaint has been escalated to a senior authority.', type: 'info', link: `complaint-status.html?id=${cid}` });
+            render();
+        };
+
+        function statusLabel(status) {
+            const m = { submitted: 'Submitted', ai_review: 'AI Analysis in Progress', admin_review: 'Admin Review', authority_review: 'With Authority', resolved: 'Resolved ✅', rejected: 'Rejected ❌' };
+            return m[status] || status;
+        }
+        function statusDesc(status, aiReason) {
+            const m = {
+                submitted: 'Your complaint has been registered. AI analysis will begin shortly.',
+                ai_review: 'Our AI is verifying your complaint for validity and routing it appropriately.',
+                admin_review: aiReason || 'Complaint forwarded to the department administrator for review.',
+                authority_review: 'Your complaint is with the relevant authority. They must respond within 6 working days.',
+                resolved: 'Great news! Your complaint has been resolved.',
+                rejected: aiReason || 'Your complaint has been rejected.',
+            };
+            return m[status] || '';
+        }
+        function ragBadgeHtml(tag) {
+            if (!tag) return '';
+            const cls = tag === 'green' ? 'badge-green' : tag === 'amber' ? 'badge-amber' : 'badge-red';
+            const icons = { green: '🟢', amber: '🟡', red: '🔴' };
+            return `<span class="badge ${cls} hide-mobile">${icons[tag]} AI: ${tag.toUpperCase()}</span>`;
+        }
+        function detailRow(label, value) {
+            return `<div style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px;padding:8px 0;border-bottom:1px solid var(--color-border);font-size:0.85rem;">
+        <span style="color:var(--color-text-3);font-size:0.78rem;flex-shrink:0;">${label}</span>
+        <span style="text-align:right;color:var(--color-text-2);">${value}</span>
+      </div>`;
+        }
+        function stepLabel(step) {
+            const m = { submitted: 'Filed', ai_review: 'AI Review', admin_review: 'Admin Review', authority_review: 'Authority', resolved: 'Resolved', rejected: 'Rejected' };
+            return m[step] || step;
+        }
+    </script>
+</body>
+
+</html>

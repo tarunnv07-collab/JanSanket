@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Legal Escalation — JanSanket</title>
+    <link rel="stylesheet" href="css/main.css" />
+    <style>
+        .lawsuit-wrapper {
+            max-width: 760px;
+            margin: 0 auto;
+            padding: 40px 24px;
+        }
+
+        .hero-alert {
+            background: linear-gradient(135deg, hsla(38, 95%, 52%, 0.12), hsla(0, 85%, 55%, 0.08));
+            border: 1px solid hsla(38, 95%, 52%, 0.3);
+            border-radius: var(--radius-xl);
+            padding: 32px;
+            margin-bottom: 28px;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <a href="dashboard.html" class="nav-logo">
+                <div class="logo-icon">🛡️</div>
+                JanSanket
+            </a>
+            <div class="nav-actions" style="margin-left:auto;">
+                <a href="dashboard.html" class="btn btn-ghost btn-sm">← Dashboard</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="page-wrapper">
+        <div class="lawsuit-wrapper">
+            <div class="hero-alert">
+                <div style="font-size:3rem;margin-bottom:12px;">⚖️</div>
+                <h2>Legal Escalation Centre</h2>
+                <p style="margin-top:8px;font-size:0.95rem;max-width:500px;margin-left:auto;margin-right:auto;">
+                    The authority failed to respond within the mandated 6-day window. You have the right to take legal
+                    action. Choose how you'd like to proceed.
+                </p>
+            </div>
+
+            <div id="lawsuitInfo">
+                <div style="text-align:center;padding:40px;color:var(--color-text-3);">Loading…</div>
+            </div>
+            <div id="lawsuitGuide" class="hidden"></div>
+        </div>
+    </div>
+
+    <script type="module">
+        import { initLawsuit } from './js/lawsuit.js';
+        import { requireLogin } from './js/auth.js';
+        requireLogin();
+        initLawsuit();
+    </script>
+</body>
+
+</html>

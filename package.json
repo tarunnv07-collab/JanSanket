@@ -1,0 +1,10 @@
+{
+  "name": "civicshield-root",
+  "version": "1.0.0",
+  "description": "CivicShield Root Launcher for AI Verification Engine & Node Backend",
+  "main": "start.sh",
+  "scripts": {
+    "start": "./start.sh",
+    "test": "cd ai-service && python3 -m pytest tests/ -v"
+  }
+}

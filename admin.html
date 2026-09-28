@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Dashboard — JanSanket</title>
+    <link rel="stylesheet" href="css/main.css" />
+    <style>
+        .admin-layout {
+            display: grid;
+            grid-template-columns: 220px 1fr;
+            min-height: 100vh;
+            padding-top: 64px;
+        }
+
+        .admin-sidebar {
+            background: var(--color-bg-2);
+            border-right: 1px solid var(--color-border);
+            padding: 24px 14px;
+            position: sticky;
+            top: 64px;
+            height: calc(100vh - 64px);
+            overflow-y: auto;
+        }
+
+        .admin-sidebar-link {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 12px;
+            border-radius: var(--radius-sm);
+            color: var(--color-text-2);
+            font-size: 0.86rem;
+            font-weight: 500;
+            transition: all var(--transition);
+            cursor: pointer;
+            margin-bottom: 4px;
+        }
+
+        .admin-sidebar-link:hover,
+        .admin-sidebar-link.active {
+            background: var(--color-surface);
+            color: var(--color-text);
+        }
+
+        .admin-main {
+            padding: 28px;
+        }
+
+        .filter-bar {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+
+        .filter-btn {
+            padding: 6px 14px;
+            border-radius: var(--radius-full);
+            font-size: 0.8rem;
+            font-weight: 600;
+            border: 1px solid var(--color-border);
+            background: transparent;
+            color: var(--color-text-2);
+            cursor: pointer;
+            transition: all var(--transition);
+        }
+
+        .filter-btn.active {
+            background: var(--color-accent);
+            color: #fff;
+            border-color: var(--color-accent);
+        }
+
+        @media (max-width: 900px) {
+            .admin-layout {
+                grid-template-columns: 1fr;
+            }
+
+            .admin-sidebar {
+                display: none;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <a href="#" class="nav-logo">
+                <div class="logo-icon">🛡️</div>
+                JanSanket <span
+                    style="font-size:0.7rem;background:var(--color-accent);color:#fff;padding:2px 8px;border-radius:var(--radius-full);margin-left:8px;">ADMIN</span>
+            </a>
+            <div class="nav-actions" style="margin-left:auto;">
+                <button class="nav-bell" id="navBell">🔔<span class="notif-badge"></span></button>
+                <button class="btn btn-ghost btn-sm" id="logoutBtn">Log Out</button>
+            </div>
+        </div>
+    </nav>
+
+    <div class="notif-panel" id="notifPanel">
+        <div class="notif-panel-header">
+            <h4>Notifications</h4><span class="notif-mark-all" id="markAllRead">Mark all read</span>
+        </div>
+        <div class="notif-list" id="notifList"></div>
+    </div>
+
+    <div class="admin-layout">
+        <aside class="admin-sidebar">
+            <div
+                style="font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--color-text-3);padding:0 12px;margin-bottom:12px;">
+                Admin Panel</div>
+            <div class="admin-sidebar-link active">📊 Complaints</div>
+            <div class="admin-sidebar-link" style="opacity:0.5;cursor:default;">📈 Analytics (soon)</div>
+            <div style="height:1px;background:var(--color-border);margin:12px 0;"></div>
+            <a href="login.html" class="admin-sidebar-link" id="logoutBtn2">↩ Log Out</a>
+        </aside>
+
+        <main class="admin-main">
+            <!-- Stats -->
+            <div class="grid-4" style="margin-bottom:24px;">
+                <div class="stat-card">
+                    <div class="stat-icon">📋</div>
+                    <div class="stat-value" id="statTotal">0</div>
+                    <div class="stat-label">Total Complaints</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">⏳</div>
+                    <div class="stat-value" id="statPending">0</div>
+                    <div class="stat-label">Pending Admin</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">✅</div>
+                    <div class="stat-value" id="statResolved">0</div>
+                    <div class="stat-label">Resolved</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">❌</div>
+                    <div class="stat-value" id="statRejected">0</div>
+                    <div class="stat-label">Rejected</div>
+                </div>
+            </div>
+
+            <!-- Filter & Table -->
+            <div class="card" style="padding:0;overflow:hidden;">
+                <div style="padding:20px 20px 0;">
+                    <div
+                        style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;flex-wrap:wrap;gap:10px;">
+                        <h3>All Complaints</h3>
+                        <div class="filter-bar">
+                            <button class="filter-btn active" onclick="applyFilter('all',this)">All</button>
+                            <button class="filter-btn" onclick="applyFilter('admin_review',this)">⏳ Pending</button>
+                            <button class="filter-btn" onclick="applyFilter('green',this)">🟢 Green</button>
+                            <button class="filter-btn" onclick="applyFilter('amber',this)">🟡 Amber</button>
+                            <button class="filter-btn" onclick="applyFilter('resolved',this)">✅ Resolved</button>
+                            <button class="filter-btn" onclick="applyFilter('rejected',this)">❌ Rejected</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="table-wrapper" style="border:none;border-radius:0;">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Complaint</th>
+                                <th>Filed By</th>
+                                <th>RAG</th>
+                                <th>Status</th>
+                                <th>Time</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="complaintsList">
+                            <tr>
+                                <td colspan="7" style="text-align:center;padding:40px;color:var(--color-text-3);">
+                                    Loading…</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Detail Modal -->
+    <div class="modal-overlay" id="complaintModal">
+        <div class="modal">
+            <button class="modal-close" onclick="closeModal()">✕</button>
+            <h3 style="margin-bottom:20px;">Complaint Details</h3>
+            <div id="modalBody"></div>
+        </div>
+    </div>
+
+    <script type="module">
+        import { initAdmin } from './js/admin.js';
+        import { logout } from './js/auth.js';
+        import { initNotifPanel } from './js/notification.js';
+
+        initNotifPanel();
+        initAdmin();
+
+        document.getElementById('logoutBtn').addEventListener('click', logout);
+        document.getElementById('logoutBtn2')?.addEventListener('click', logout);
+
+        let currentFilter = 'all';
+        window.applyFilter = (filter, btn) => {
+            currentFilter = filter;
+            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            // re-trigger load which reads filter
+            window.__filterComplaints && window.__filterComplaints(filter);
+        };
+    </script>
+</body>
+
+</html>

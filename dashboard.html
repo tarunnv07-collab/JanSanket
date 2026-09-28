@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard — JanSanket</title>
+    <link rel="stylesheet" href="css/main.css" />
+    <style>
+        .dash-layout {
+            display: grid;
+            grid-template-columns: 260px 1fr;
+            min-height: 100vh;
+            padding-top: 64px;
+        }
+
+        .sidebar {
+            background: var(--color-bg-2);
+            border-right: 1px solid var(--color-border);
+            padding: 24px 16px;
+            position: sticky;
+            top: 64px;
+            height: calc(100vh - 64px);
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .sidebar-user {
+            padding: 16px;
+            background: var(--color-surface);
+            border-radius: var(--radius-md);
+            margin-bottom: 20px;
+        }
+
+        .sidebar-nav {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            flex: 1;
+        }
+
+        .sidebar-link {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 12px;
+            border-radius: var(--radius-sm);
+            font-size: 0.88rem;
+            font-weight: 500;
+            color: var(--color-text-2);
+            transition: all var(--transition);
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .sidebar-link:hover {
+            background: var(--color-surface);
+            color: var(--color-text);
+        }
+
+        .sidebar-link.active {
+            background: var(--color-accent-pale);
+            color: var(--color-accent);
+            border: 1px solid hsla(0, 85%, 55%, 0.25);
+        }
+
+        .main-content {
+            padding: 32px;
+        }
+
+        .complaint-card {
+            background: var(--color-surface);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-lg);
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            transition: all var(--transition);
+            cursor: pointer;
+        }
+
+        .complaint-card:hover {
+            border-color: var(--color-border-2);
+            box-shadow: var(--shadow-md);
+            transform: translateY(-1px);
+        }
+
+        .complaint-card-top {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 12px;
+        }
+
+        .mini-tracker {
+            display: flex;
+            align-items: center;
+            gap: 0;
+            margin-top: 6px;
+        }
+
+        .mini-step {
+            display: flex;
+            align-items: center;
+            gap: 0;
+        }
+
+        .mini-dot {
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            border: 2px solid var(--color-border);
+            background: var(--color-bg-2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.6rem;
+            flex-shrink: 0;
+            transition: all var(--transition);
+        }
+
+        .mini-dot.done {
+            border-color: var(--color-green);
+            background: var(--color-green);
+            color: #fff;
+        }
+
+        .mini-dot.active {
+            border-color: var(--color-accent);
+            background: var(--color-accent);
+            color: #fff;
+        }
+
+        .mini-dot.rejected {
+            border-color: var(--color-red);
+            background: var(--color-red);
+            color: #fff;
+        }
+
+        .mini-line {
+            width: 28px;
+            height: 2px;
+            background: var(--color-border);
+            transition: background var(--transition);
+        }
+
+        .mini-line.done {
+            background: var(--color-green);
+        }
+
+        .profile-section {
+            background: var(--color-surface);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-lg);
+            padding: 24px;
+        }
+
+        @media (max-width: 768px) {
+            .dash-layout {
+                grid-template-columns: 1fr;
+            }
+
+            .sidebar {
+                display: none;
+            }
+
+            .main-content {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="container">
+            <a href="index.html" class="nav-logo">
+                <div class="logo-icon">🛡️</div>
+                JanSanket
+            </a>
+            <div class="nav-actions" style="margin-left:auto;">
+                <button class="nav-bell" id="navBell">🔔<span class="notif-badge"></span></button>
+                <button class="btn btn-ghost btn-sm" id="logoutBtn">Log Out</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Notification Panel -->
+    <div class="notif-panel" id="notifPanel">
+        <div class="notif-panel-header">
+            <h4>Notifications</h4>
+            <span class="notif-mark-all" id="markAllRead">Mark all read</span>
+        </div>
+        <div class="notif-list" id="notifList"></div>
+    </div>
+
+    <div class="dash-layout">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-user">
+                <div style="font-size:1.8rem;text-align:center;margin-bottom:8px;">👤</div>
+                <div id="sidebarName" style="font-weight:700;text-align:center;font-size:0.95rem;"></div>
+                <div id="sidebarVoterId"
+                    style="font-size:0.75rem;text-align:center;color:var(--color-text-3);margin-top:2px;font-family:monospace;">
+                </div>
+                <div id="sidebarAnon"
+                    style="font-size:0.72rem;text-align:center;color:var(--color-accent);margin-top:4px;"></div>
+            </div>
+            <nav class="sidebar-nav">
+                <a class="sidebar-link active" onclick="showTab('complaints')">📋 My Complaints</a>
+                <a href="submit-complaint.html" class="sidebar-link">➕ New Complaint</a>
+                <a class="sidebar-link" onclick="showTab('profile')">👤 Profile</a>
+                <div style="flex:1;"></div>
+                <a href="index.html" class="sidebar-link" style="margin-top:auto;">🏠 Home</a>
+            </nav>
+        </aside>
+
+        <!-- Main -->
+        <main class="main-content">
+            <!-- Stats Row -->
+            <div class="grid-4" style="margin-bottom:28px;" id="statsRow">
+                <div class="stat-card">
+                    <div class="stat-icon">📋</div>
+                    <div class="stat-value" id="totalCount">0</div>
+                    <div class="stat-label">Total Complaints</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">⏳</div>
+                    <div class="stat-value" id="pendingCount">0</div>
+                    <div class="stat-label">In Progress</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">✅</div>
+                    <div class="stat-value" id="resolvedCount">0</div>
+                    <div class="stat-label">Resolved</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">❌</div>
+                    <div class="stat-value" id="rejectedCount">0</div>
+                    <div class="stat-label">Rejected</div>
+                </div>
+            </div>
+
+            <!-- Complaints Tab -->
+            <div id="tab-complaints">
+                <div
+                    style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;flex-wrap:wrap;gap:12px;">
+                    <h3>My Complaints</h3>
+                    <a href="submit-complaint.html" class="btn btn-primary btn-sm">➕ File New Complaint</a>
+                </div>
+                <div id="complaintsList" style="display:flex;flex-direction:column;gap:14px;">
+                    <div style="text-align:center;padding:60px 20px;color:var(--color-text-3);">Loading…</div>
+                </div>
+            </div>
+
+            <!-- Profile Tab -->
+            <div id="tab-profile" class="hidden">
+                <h3 style="margin-bottom:20px;">Edit Profile</h3>
+                <div class="profile-section">
+                    <form id="profileForm" style="display:flex;flex-direction:column;gap:16px;">
+                        <div class="grid-2" style="gap:12px;">
+                            <div class="form-group">
+                                <label class="form-label">Full Name</label>
+                                <input id="profileName" class="form-input" />
+                                <span id="profileNameErr" class="form-error hidden"></span>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Age</label>
+                                <input id="profileAge" type="number" class="form-input" />
+                                <span id="profileAgeErr" class="form-error hidden"></span>
+                            </div>
+                        </div>
+                        <div class="grid-2" style="gap:12px;">
+                            <div class="form-group">
+                                <label class="form-label">Phone</label>
+                                <input id="profilePhone" type="tel" class="form-input" maxlength="10" />
+                                <span id="profilePhoneErr" class="form-error hidden"></span>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Gender</label>
+                                <select id="profileGender" class="form-select">
+                                    <option value="male">Male</option>
+                                    <option value="female">Female</option>
+                                    <option value="other">Other</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Voter ID</label>
+                            <input id="profileVoterId" class="form-input" disabled
+                                style="opacity:0.5;cursor:not-allowed;" />
+                            <small>Voter ID cannot be changed</small>
+                        </div>
+                        <button type="submit" class="btn btn-primary"
+                            style="align-self:flex-start;padding:11px 28px;">Save Changes</button>
+                    </form>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script type="module">
+        import { requireLogin, logout, handleProfileUpdate } from './js/auth.js';
+        import { ComplaintStore, Session, NotifStore } from './js/store.js';
+        import { initNotifPanel, updateBadge, showToast, timeAgo, formatDate } from './js/notification.js';
+        import { getAnonymousId } from './js/auth.js';
+
+        if (!requireLogin()) throw new Error('redirect');
+
+        const user = Session.get();
+
+        // Sidebar info
+        document.getElementById('sidebarName').textContent = user.name;
+        document.getElementById('sidebarVoterId').textContent = user.voterId;
+        document.getElementById('sidebarAnon').textContent = 'Anonymous: ' + getAnonymousId(user.voterId);
+
+        // Profile form
+        document.getElementById('profileName').value = user.name;
+        document.getElementById('profileAge').value = user.age;
+        document.getElementById('profilePhone').value = user.phone;
+        document.getElementById('profileGender').value = user.gender;
+        document.getElementById('profileVoterId').value = user.voterId;
+        document.getElementById('profileForm').addEventListener('submit', handleProfileUpdate);
+
+        // Logout
+        document.getElementById('logoutBtn').addEventListener('click', logout);
+
+        // Notifications
+        initNotifPanel();
+
+        // Tab switching
+        window.showTab = (tab) => {
+            document.querySelectorAll('[id^="tab-"]').forEach(el => el.classList.add('hidden'));
+            document.getElementById('tab-' + tab)?.classList.remove('hidden');
+            document.querySelectorAll('.sidebar-link').forEach(l => l.classList.remove('active'));
+            event?.target?.classList.add('active');
+        };
+
+        let lastRenderedJson = '';
+
+        loadAll();
+        setInterval(syncServerData, 10000);
+
+        async function loadAll() {
+            let complaints = ComplaintStore.getByUser(user.id).sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+            renderIfChanged(complaints);
+            await syncServerData();
+        }
+
+        async function syncServerData() {
+            try {
+                const res = await fetch(`/api/complaints?userId=${encodeURIComponent(user.id)}`, {
+                    headers: { 'x-user-id': user.id }
+                });
+                if (res.ok) {
+                    const serverComplaints = await res.json();
+                    if (Array.isArray(serverComplaints)) {
+                        renderIfChanged(serverComplaints);
+                    }
+                }
+            } catch (e) {
+                // Fallback to local store
+            }
+        }
+
+        function renderIfChanged(complaints) {
+            const jsonStr = JSON.stringify(complaints.map(c => ({ id: c.id, status: c.status, heading: c.heading, updatedAt: c.updatedAt })));
+            if (jsonStr === lastRenderedJson) return;
+            lastRenderedJson = jsonStr;
+
+            updateStats(complaints);
+            renderComplaints(complaints);
+        }
+
+        function updateStats(complaints) {
+            document.getElementById('totalCount').textContent = complaints.length;
+            document.getElementById('pendingCount').textContent = complaints.filter(c => !['resolved', 'rejected'].includes(c.status)).length;
+            document.getElementById('resolvedCount').textContent = complaints.filter(c => c.status === 'resolved').length;
+            document.getElementById('rejectedCount').textContent = complaints.filter(c => c.status === 'rejected').length;
+        }
+
+        const STATUS_STEPS = ['submitted', 'ai_review', 'admin_review', 'authority_review', 'resolved'];
+
+        function renderComplaints(complaints) {
+            const list = document.getElementById('complaintsList');
+            if (!complaints.length) {
+                list.innerHTML = `
+          <div style="text-align:center;padding:60px 20px;color:var(--color-text-3);">
+            <div style="font-size:3rem;margin-bottom:12px;">📋</div>
+            <h4 style="margin-bottom:8px;">No complaints yet</h4>
+            <p style="margin-bottom:20px;font-size:0.88rem;">You haven't filed any complaints. Start by clicking the button below.</p>
+            <a href="submit-complaint.html" class="btn btn-primary">➕ File Your First Complaint</a>
+          </div>`;
+                return;
+            }
+
+            list.innerHTML = complaints.map(c => {
+                const stepIndex = c.status === 'rejected' ? -1 : STATUS_STEPS.indexOf(c.status);
+                const ragColors = { green: 'var(--color-green)', amber: 'var(--color-amber)', red: 'var(--color-red)' };
+                return `
+        <div class="complaint-card" onclick="window.location.href='complaint-status.html?id=${c.id}'">
+          <div class="complaint-card-top">
+            <div style="flex:1;">
+              <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:6px;">
+                <span style="font-family:monospace;font-size:0.75rem;color:var(--color-text-3);">${c.id}</span>
+                ${c.ragTag ? `<span style="width:8px;height:8px;border-radius:50%;background:${ragColors[c.ragTag] || 'gray'};display:inline-block;"></span>` : ''}
+                ${statusBadge(c.status)}
+              </div>
+              <h4 style="margin-bottom:2px;font-size:0.95rem;">${c.heading}</h4>
+              <div style="font-size:0.78rem;color:var(--color-text-3);">📁 ${c.department} · 📍 ${(c.location || '').slice(0, 40)}${(c.location || '').length > 40 ? '…' : ''}</div>
+            </div>
+            <div style="text-align:right;flex-shrink:0;">
+              <div style="font-size:0.72rem;color:var(--color-text-3);">${timeAgo(c.createdAt)}</div>
+              <div style="font-size:0.8rem;margin-top:4px;">→</div>
+            </div>
+          </div>
+
+          <!-- Mini Tracker -->
+          <div>
+            <div style="font-size:0.72rem;color:var(--color-text-3);margin-bottom:6px;font-weight:600;text-transform:uppercase;letter-spacing:0.04em;">Progress</div>
+            <div class="mini-tracker">
+              ${STATUS_STEPS.map((step, i) => {
+                    const isDone = c.status !== 'rejected' && i < stepIndex;
+                    const isActive = c.status !== 'rejected' && i === stepIndex;
+                    const isReject = c.status === 'rejected' && i === 0;
+                    const cls = isDone ? 'done' : isActive ? 'active' : isReject ? 'rejected' : '';
+                    const icons = ['📋', '🤖', '🏛️', '⚖️', '✅'];
+                    return `
+                  <div class="mini-step">
+                    <div class="mini-dot ${cls}" title="${step}">${isDone ? '✓' : icons[i]}</div>
+                    ${i < STATUS_STEPS.length - 1 ? `<div class="mini-line ${isDone ? 'done' : ''}"></div>` : ''}
+                  </div>
+                `;
+                }).join('')}
+              ${c.status === 'rejected' ? '<span class="badge badge-red" style="margin-left:10px;">❌ Rejected</span>' : ''}
+            </div>
+            <div style="display:flex;justify-content:space-between;margin-top:4px;font-size:0.66rem;color:var(--color-text-3);">
+              <span>Filed</span><span>AI</span><span>Admin</span><span>Authority</span><span>Done</span>
+            </div>
+          </div>
+
+          ${c.authorityNote ? `<div style="font-size:0.8rem;color:var(--color-green);border-top:1px solid var(--color-border);padding-top:10px;">✅ Authority: "${c.authorityNote}"</div>` : ''}
+        </div>
+      `}).join('');
+        }
+
+        function statusBadge(status) {
+            const map = {
+                submitted: 'badge-blue', ai_review: 'badge-amber', admin_review: 'badge-amber',
+                authority_review: 'badge-blue', resolved: 'badge-green', rejected: 'badge-red',
+            };
+            const labels = {
+                submitted: '📋 Submitted', ai_review: '🤖 AI Review', admin_review: '🏛️ Admin',
+                authority_review: '⚖️ Authority', resolved: '✅ Resolved', rejected: '❌ Rejected',
+            };
+            return `<span class="badge ${map[status] || 'badge-gray'}">${labels[status] || status}</span>`;
+        }
+    </script>
+</body>
+
+</html>

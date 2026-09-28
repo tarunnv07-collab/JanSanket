@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Submit Complaint — JanSanket</title>
+    <link rel="stylesheet" href="css/main.css" />
+    <style>
+        .submit-layout {
+            display: grid;
+            grid-template-columns: 1fr 340px;
+            gap: 28px;
+            padding: 32px 0;
+        }
+
+        .user-info-card {
+            background: var(--color-surface);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-lg);
+            padding: 20px;
+        }
+
+        .user-field {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 9px 0;
+            border-bottom: 1px solid var(--color-border);
+            font-size: 0.88rem;
+        }
+
+        .user-field:last-child {
+            border-bottom: none;
+        }
+
+        .user-field-label {
+            color: var(--color-text-3);
+            font-size: 0.78rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+        }
+
+        .anon-banner {
+            background: var(--color-accent-pale);
+            border: 1px solid hsla(0, 85%, 55%, 0.3);
+            border-radius: var(--radius-md);
+            padding: 12px 16px;
+            font-size: 0.84rem;
+            color: var(--color-text-2);
+            margin-bottom: 4px;
+        }
+
+        @media (max-width: 900px) {
+            .submit-layout {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="container">
+            <a href="dashboard.html" class="nav-logo">
+                <div class="logo-icon">🛡️</div>
+                JanSanket
+            </a>
+            <div class="nav-actions" style="margin-left:auto;">
+                <button class="nav-bell" id="navBell">🔔<span class="notif-badge"></span></button>
+                <a href="dashboard.html" class="btn btn-ghost btn-sm">← Dashboard</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="notif-panel" id="notifPanel">
+        <div class="notif-panel-header">
+            <h4>Notifications</h4>
+            <span class="notif-mark-all" id="markAllRead">Mark all read</span>
+        </div>
+        <div class="notif-list" id="notifList"></div>
+    </div>
+
+    <div class="page-wrapper">
+        <div class="container">
+            <div style="margin-bottom:24px;">
+                <div class="section-tag">📋 New Complaint</div>
+                <h2>File a Complaint</h2>
+                <p>Your identity will be hidden. We'll analyze your complaint with AI before routing to the authority.
+                </p>
+            </div>
+
+            <div class="submit-layout">
+                <!-- Left: Form -->
+                <div>
+                    <form id="complaintForm" novalidate style="display:flex;flex-direction:column;gap:20px;">
+
+                        <!-- Department -->
+                        <div class="form-group">
+                            <label for="department" class="form-label">Department <span class="text-accent">*</span></label>
+                            <select id="department" name="department" class="form-input form-select" required>
+                                <option value="" disabled selected>Please select a department</option>
+                                <option value="Public Works Department (PWD)">Public Works Department (PWD)</option>
+                                <option value="Municipal Corporation – Solid Waste Management / Sanitation Department">Municipal Corporation – Solid Waste Management / Sanitation Department</option>
+                            </select>
+                            <span id="deptErr" class="form-error hidden"></span>
+                        </div>
+
+                        <!-- Heading -->
+                        <div class="form-group">
+                            <label class="form-label">Complaint Heading <span class="text-accent">*</span></label>
+                            <input id="heading" class="form-input" placeholder="Short descriptive title of the issue"
+                                maxlength="100" />
+                            <span id="headingErr" class="form-error hidden"></span>
+                        </div>
+
+                        <!-- Description -->
+                        <div class="form-group">
+                            <label class="form-label">Detailed Description <span class="text-accent">*</span></label>
+                            <textarea id="description" class="form-textarea"
+                                placeholder="Describe the civic issue in detail — what happened, since when, how it affects you and the community. Minimum 50 characters."
+                                rows="6" style="min-height:160px;"></textarea>
+                            <span id="descErr" class="form-error hidden"></span>
+                            <div style="text-align:right;font-size:0.75rem;color:var(--color-text-3);margin-top:4px;"
+                                id="charCount">0 characters</div>
+                        </div>
+
+                        <!-- Location -->
+                        <div class="form-group">
+                            <label class="form-label">Exact Location <span class="text-accent">*</span></label>
+                            <div style="display:flex;gap:10px;align-items:flex-start;">
+                                <input id="locationInput" class="form-input"
+                                    placeholder="Enter address or use geolocation button →" style="flex:1;" />
+                                <button type="button" id="geoBtn" class="btn btn-secondary"
+                                    style="flex-shrink:0;white-space:nowrap;">📍 Use My Location</button>
+                            </div>
+                            <div id="locationDisplay" class="hidden"
+                                style="font-size:0.8rem;color:var(--color-text-2);margin-top:6px;padding:8px 12px;background:var(--color-bg-2);border-radius:var(--radius-sm);">
+                            </div>
+                            <span id="locationErr" class="form-error hidden"></span>
+                        </div>
+
+                        <!-- File Upload -->
+                        <div class="form-group">
+                            <label class="form-label">Supporting Documents / Photos <span
+                                    style="color:var(--color-text-3);font-weight:400;">(optional)</span></label>
+                            <div id="dropZone" class="file-upload-area">
+                                <div class="upload-icon">📎</div>
+                                <div style="font-weight:600;font-size:0.9rem;">Drag & drop files here or click to browse
+                                </div>
+                                <div style="font-size:0.78rem;color:var(--color-text-3);margin-top:4px;">Accepted: JPG,
+                                    PNG, PDF, MP4 · Max 5MB each</div>
+                            </div>
+                            <input id="fileInput" type="file" multiple accept="image/*,application/pdf,video/mp4"
+                                style="display:none;" />
+                            <div id="fileList" class="file-list"></div>
+                        </div>
+
+                        <!-- Terms -->
+                        <div>
+                            <label class="checkbox-wrapper">
+                                <input type="checkbox" id="termsCheck" />
+                                <span class="checkbox-custom"></span>
+                                <span style="font-size:0.85rem;color:var(--color-text-2);">I confirm that the
+                                    information provided is accurate to the best of my knowledge. I agree to Civic
+                                    Shield's <a href="#" style="color:var(--color-accent);">Terms & Conditions</a> and
+                                    <a href="#" style="color:var(--color-accent);">Privacy Policy</a>.</span>
+                            </label>
+                        </div>
+
+                        <button type="submit" id="submitBtn" class="btn btn-primary btn-lg">
+                            🚀 Submit Complaint
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Right: Info Panel -->
+                <div style="display:flex;flex-direction:column;gap:16px;">
+                    <!-- User Info -->
+                    <div class="user-info-card">
+                        <div
+                            style="font-size:0.75rem;font-weight:700;color:var(--color-text-3);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:12px;">
+                            Your Details (Auto-filled)</div>
+                        <div class="user-field"><span class="user-field-label">Voter ID</span><span id="displayId"
+                                style="font-family:monospace;font-size:0.85rem;">—</span></div>
+                        <div class="user-field"><span class="user-field-label">Name</span><span
+                                id="displayName">—</span></div>
+                        <div class="user-field"><span class="user-field-label">Age</span><span id="displayAge">—</span>
+                        </div>
+                        <div class="user-field"><span class="user-field-label">Gender</span><span id="displayGender"
+                                style="text-transform:capitalize;">—</span></div>
+                    </div>
+
+                    <!-- Anonymous ID -->
+                    <div class="anon-banner">
+                        🛡️ <strong>Your complaint identity:</strong><br />
+                        <span id="displayAnon"
+                            style="display:block;margin-top:4px;font-family:monospace;font-size:0.95rem;color:var(--color-accent);font-weight:700;"></span>
+                        <span style="font-size:0.75rem;display:block;margin-top:4px;">Your real name is never shown on
+                            the complaint.</span>
+                    </div>
+
+                    <!-- What Happens Next -->
+                    <div class="card">
+                        <div
+                            style="font-size:0.75rem;font-weight:700;color:var(--color-text-3);text-transform:uppercase;margin-bottom:12px;">
+                            What Happens Next</div>
+                        <div class="timeline" style="padding-left:24px;">
+                            <div class="timeline-item">
+                                <div class="timeline-dot pending">🤖</div>
+                                <div class="timeline-content">
+                                    <div class="timeline-title">AI Analysis</div>
+                                    <div class="timeline-desc">Verifies your complaint within seconds</div>
+                                </div>
+                            </div>
+                            <div class="timeline-item">
+                                <div class="timeline-dot pending">🏛️</div>
+                                <div class="timeline-content">
+                                    <div class="timeline-title">Admin Review</div>
+                                    <div class="timeline-desc">Department admin reviews &amp; routes</div>
+                                </div>
+                            </div>
+                            <div class="timeline-item">
+                                <div class="timeline-dot pending">⚖️</div>
+                                <div class="timeline-content">
+                                    <div class="timeline-title">Authority Action</div>
+                                    <div class="timeline-desc">6-day deadline to resolve</div>
+                                </div>
+                            </div>
+                            <div class="timeline-item">
+                                <div class="timeline-dot pending">🔔</div>
+                                <div class="timeline-content">
+                                    <div class="timeline-title">You're Notified</div>
+                                    <div class="timeline-desc">Get updates at every step</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="module">
+        import { initComplaintForm } from './js/complaint.js';
+        import { initNotifPanel } from './js/notification.js';
+        initNotifPanel();
+        initComplaintForm();
+
+        // Char counter
+        document.getElementById('description').addEventListener('input', function () {
+            document.getElementById('charCount').textContent = this.value.length + ' characters';
+        });
+    </script>
+</body>
+
+</html>

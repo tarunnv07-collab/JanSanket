@@ -1,0 +1,52 @@
+[
+  {
+    "id": "CS-PUNE-104",
+    "complaint_text": "Ration shop in Hadapsar Pune closed for the last 45 days. No grain distributed for priority cardholders.",
+    "category": "ration_card",
+    "location_name": "Hadapsar, Pune",
+    "latitude": 18.5089,
+    "longitude": 73.9260,
+    "timestamp": "2026-08-01T09:00:00Z",
+    "status": "SUPPORTED"
+  },
+  {
+    "id": "CS-PUNE-119",
+    "complaint_text": "I visited the Pune district fair price shop thrice this month. Store is constantly locked and shopkeeper refusing ration delivery.",
+    "category": "ration_card",
+    "location_name": "Shivajinagar, Pune",
+    "latitude": 18.5314,
+    "longitude": 73.8446,
+    "timestamp": "2026-08-10T11:15:00Z",
+    "status": "SUPPORTED"
+  },
+  {
+    "id": "CS-PUNE-143",
+    "complaint_text": "Haven't received ration grain quota for 2 months in Pune area. FPS dealer claims stock unavailable.",
+    "category": "ration_card",
+    "location_name": "Kothrud, Pune",
+    "latitude": 18.5074,
+    "longitude": 73.8077,
+    "timestamp": "2026-08-15T14:30:00Z",
+    "status": "LIKELY_SUPPORTED"
+  },
+  {
+    "id": "CS-PUNE-156",
+    "complaint_text": "Ration shop owner in Pune district charging extra money and not giving monthly rice allocation.",
+    "category": "ration_card",
+    "location_name": "Swargate, Pune",
+    "latitude": 18.5018,
+    "longitude": 73.8636,
+    "timestamp": "2026-08-20T10:00:00Z",
+    "status": "SUPPORTED"
+  },
+  {
+    "id": "CS-PUNE-162",
+    "complaint_text": "PDS ration distribution delayed by over 60 days across Pune center. Shop closed whenever visited.",
+    "category": "ration_card",
+    "location_name": "Pune City",
+    "latitude": 18.5204,
+    "longitude": 73.8567,
+    "timestamp": "2026-08-24T16:00:00Z",
+    "status": "LIKELY_SUPPORTED"
+  }
+]

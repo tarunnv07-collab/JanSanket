@@ -1,0 +1,1144 @@
+[
+  {
+    "id": "CS93142607",
+    "userId": "mm4tvc73p7zeb",
+    "anonymousId": "unknown4567",
+    "name": "Tarun",
+    "department": "ROAD",
+    "heading": "road accident and pot holes",
+    "description": "due to the damage in the road of the jain university road there was the critical accident in the road that lead to the daeth of the two people and also the road is unsatable to drive  are too many pot holes that make us cant drive so i request the respected authorities to make the raod again workable as soon as possible ",
+    "location": "Jain University, BWSSB Pipeline Track, Jakkasandra, Harohalli taluk, Bengaluru South, Karnataka, 562112, India",
+    "coords": {
+      "lat": 12.642316840356242,
+      "lng": 77.43971638082535
+    },
+    "files": [],
+    "status": "resolved",
+    "ragTag": "green",
+    "aiReason": "Complaint contains valid civic issue with sufficient detail.",
+    "adminNote": "",
+    "authorityNote": "I AM THINK OF RESOLVING THE CASE",
+    "deadline": "2026-03-09T11:53:00.925Z",
+    "dataShareConsent": "declined",
+    "deadline_notified": false,
+    "timeline": [
+      {
+        "step": "submitted",
+        "timestamp": "2026-02-27T11:52:22.607Z",
+        "note": "Complaint registered successfully"
+      },
+      {
+        "step": "ai_review",
+        "timestamp": "2026-02-27T11:52:25.109Z",
+        "note": "AI analyzing complaint for validity and relevance…"
+      },
+      {
+        "step": "admin_review",
+        "timestamp": "2026-02-27T11:52:28.111Z",
+        "note": "AI classified as GREEN. Forwarded to admin."
+      },
+      {
+        "step": "authority_review",
+        "timestamp": "2026-02-27T11:53:00.925Z",
+        "note": "Validated by admin. Forwarded to authority."
+      },
+      {
+        "step": "resolved",
+        "timestamp": "2026-02-27T11:54:30.225Z",
+        "note": "Resolved by authority: I AM THINK OF RESOLVING THE CASE"
+      },
+      {
+        "step": "authority_review",
+        "timestamp": "2026-08-18T15:45:39.119Z",
+        "note": "Citizen chose to remain anonymous. Escalated to higher authority."
+      }
+    ],
+    "createdAt": "2026-02-27T11:52:22.607Z",
+    "updatedAt": "2026-08-18T15:45:39.119Z"
+  },
+  {
+    "id": "CS60298125",
+    "userId": "mt0d3jijtgz8z",
+    "anonymousId": "unknown567",
+    "name": "Finance User",
+    "department": "Finance",
+    "heading": "Audit Discrepancy",
+    "description": "Detailed budget report discrepancy in Q3 allocation needing investigation.",
+    "location": "Finance Dept Office",
+    "coords": null,
+    "files": [],
+    "status": "authority_review",
+    "ragTag": "amber",
+    "aiReason": "Complaint requires manual admin verification.",
+    "adminNote": "",
+    "authorityNote": null,
+    "deadline": "2026-08-27T18:01:52.771Z",
+    "dataShareConsent": null,
+    "deadline_notified": false,
+    "timeline": [
+      {
+        "step": "submitted",
+        "timestamp": "2026-08-19T17:24:58.125Z",
+        "note": "Complaint registered successfully"
+      },
+      {
+        "step": "ai_review",
+        "timestamp": "2026-08-19T17:25:00.627Z",
+        "note": "AI analyzing complaint for validity and relevance…"
+      },
+      {
+        "step": "ai_review",
+        "timestamp": "2026-08-19T17:25:00.627Z",
+        "note": "AI analyzing complaint for validity and relevance…"
+      },
+      {
+        "step": "admin_review",
+        "timestamp": "2026-08-19T17:25:03.628Z",
+        "note": "AI classified as AMBER. Forwarded to admin."
+      },
+      {
+        "step": "admin_review",
+        "timestamp": "2026-08-19T17:25:03.630Z",
+        "note": "AI classified as AMBER. Forwarded to admin."
+      },
+      {
+        "step": "authority_review",
+        "timestamp": "2026-08-19T18:01:40.043Z",
+        "note": "Validated by admin. Forwarded to authority."
+      },
+      {
+        "step": "authority_review",
+        "timestamp": "2026-08-19T18:01:41.188Z",
+        "note": "Validated by admin. Forwarded to authority."
+      },
+      {
+        "step": "authority_review",
+        "timestamp": "2026-08-19T18:01:41.905Z",
+        "note": "Validated by admin. Forwarded to authority."
+      },
+      {
+        "step": "authority_review",
+        "timestamp": "2026-08-19T18:01:44.471Z",
+        "note": "Validated by admin. Forwarded to authority."
+      },
+      {
+        "step": "authority_review",
+        "timestamp": "2026-08-19T18:01:48.506Z",
+        "note": "Validated by admin. Forwarded to authority."
+      },
+      {
+        "step": "authority_review",
+        "timestamp": "2026-08-19T18:01:50.704Z",
+        "note": "Validated by admin. Forwarded to authority."
+      },
+      {
+        "step": "authority_review",
+        "timestamp": "2026-08-19T18:01:52.771Z",
+        "note": "Validated by admin. Forwarded to authority."
+      }
+    ],
+    "createdAt": "2026-08-19T17:24:58.125Z",
+    "updatedAt": "2026-08-19T18:01:52.771Z"
+  },
+  {
+    "id": "CS60298125",
+    "userId": "mt0d3jikgd8iw",
+    "anonymousId": "unknown567",
+    "name": "HR User",
+    "department": "Human Resources",
+    "heading": "Staffing Misallocation",
+    "description": "Severe understaffing in emergency response team leading to delayed response.",
+    "location": "HR HQ",
+    "coords": null,
+    "files": [],
+    "status": "submitted",
+    "ragTag": null,
+    "aiReason": null,
+    "adminNote": null,
+    "authorityNote": null,
+    "deadline": null,
+    "dataShareConsent": null,
+    "deadline_notified": false,
+    "timeline": [
+      {
+        "step": "submitted",
+        "timestamp": "2026-08-19T17:24:58.125Z",
+        "note": "Complaint registered successfully"
+      }
+    ],
+    "createdAt": "2026-08-19T17:24:58.125Z",
+    "updatedAt": "2026-08-19T17:24:58.125Z"
+  },
+  {
+    "id": "CS60319061",
+    "userId": "mt0d3jikgd8iw",
+    "anonymousId": "unknown567",
+    "name": "HR User",
+    "department": "Human Resources",
+    "heading": "Staffing Misallocation",
+    "description": "Severe understaffing in emergency response team leading to delayed response.",
+    "location": "HR HQ",
+    "coords": null,
+    "files": [],
+    "status": "authority_review",
+    "ragTag": "amber",
+    "aiReason": "Complaint requires manual admin verification.",
+    "adminNote": "",
+    "authorityNote": null,
+    "deadline": "2026-10-06T18:16:36.419Z",
+    "dataShareConsent": null,
+    "deadline_notified": false,
+    "timeline": [
+      {
+        "step": "submitted",
+        "timestamp": "2026-08-19T17:25:19.061Z",
+        "note": "Complaint registered successfully"
+      },
+      {
+        "step": "ai_review",
+        "timestamp": "2026-08-19T17:25:21.563Z",
+        "note": "AI analyzing complaint for validity and relevance…"
+      },
+      {
+        "step": "ai_review",
+        "timestamp": "2026-08-19T17:25:21.565Z",
+        "note": "AI analyzing complaint for validity and relevance…"
+      },
+      {
+        "step": "admin_review",
+        "timestamp": "2026-08-19T17:25:24.567Z",
+        "note": "AI classified as AMBER. Forwarded to admin."
+      },
+      {
+        "step": "admin_review",
+        "timestamp": "2026-08-19T17:25:24.569Z",
+        "note": "AI classified as AMBER. Forwarded to admin."
+      },
+      {
+        "step": "authority_review",
+        "timestamp": "2026-09-28T18:16:36.419Z",
+        "note": "Validated by admin. Forwarded to authority."
+      }
+    ],
+    "createdAt": "2026-08-19T17:25:19.061Z",
+    "updatedAt": "2026-09-28T18:16:36.419Z"
+  },
+  {
+    "id": "CS60349783",
+    "userId": "mt0d3jijtgz8z",
+    "anonymousId": "unknown567",
+    "name": "Finance User",
+    "department": "Finance",
+    "heading": "Audit Discrepancy",
+    "description": "Detailed budget report discrepancy in Q3 allocation needing investigation.",
+    "location": "Finance Dept Office",
+    "coords": null,
+    "files": [],
+    "status": "rejected",
+    "ragTag": "amber",
+    "aiReason": "Complaint requires manual admin verification.",
+    "adminNote": "Complaint does not meet criteria.",
+    "authorityNote": null,
+    "deadline": null,
+    "dataShareConsent": null,
+    "deadline_notified": false,
+    "timeline": [
+      {
+        "step": "submitted",
+        "timestamp": "2026-08-19T17:25:49.783Z",
+        "note": "Complaint registered successfully"
+      },
+      {
+        "step": "ai_review",
+        "timestamp": "2026-08-19T17:25:52.286Z",
+        "note": "AI analyzing complaint for validity and relevance…"
+      },
+      {
+        "step": "admin_review",
+        "timestamp": "2026-08-19T17:25:55.290Z",
+        "note": "AI classified as AMBER. Forwarded to admin."
+      },
+      {
+        "step": "rejected",
+        "timestamp": "2026-09-28T18:16:38.267Z",
+        "note": "Rejected by admin: Complaint does not meet criteria."
+      }
+    ],
+    "createdAt": "2026-08-19T17:25:49.783Z",
+    "updatedAt": "2026-09-28T18:16:38.267Z"
+  },
+  {
+    "id": "CS60349784",
+    "userId": "mt0d3jikgd8iw",
+    "anonymousId": "unknown567",
+    "name": "HR User",
+    "department": "Human Resources",
+    "heading": "Staffing Misallocation",
+    "description": "Severe understaffing in emergency response team leading to delayed response.",
+    "location": "HR HQ",
+    "coords": null,
+    "files": [],
+    "status": "admin_review",
+    "ragTag": "amber",
+    "aiReason": "Complaint requires manual admin verification.",
+    "adminNote": null,
+    "authorityNote": null,
+    "deadline": null,
+    "dataShareConsent": null,
+    "deadline_notified": false,
+    "timeline": [
+      {
+        "step": "submitted",
+        "timestamp": "2026-08-19T17:25:49.784Z",
+        "note": "Complaint registered successfully"
+      },
+      {
+        "step": "ai_review",
+        "timestamp": "2026-08-19T17:25:52.287Z",
+        "note": "AI analyzing complaint for validity and relevance…"
+      },
+      {
+        "step": "admin_review",
+        "timestamp": "2026-08-19T17:25:55.291Z",
+        "note": "AI classified as AMBER. Forwarded to admin."
+      }
+    ],
+    "createdAt": "2026-08-19T17:25:49.784Z",
+    "updatedAt": "2026-08-19T17:25:55.291Z"
+  },
+  {
+    "id": "CS60399339",
+    "userId": "mt0d3jijtgz8z",
+    "anonymousId": "unknown567",
+    "name": "Finance User",
+    "department": "Finance",
+    "heading": "Audit Discrepancy",
+    "description": "Detailed budget report discrepancy in Q3 allocation needing investigation.",
+    "location": "Finance Dept Office",
+    "coords": null,
+    "files": [],
+    "status": "authority_review",
+    "ragTag": "amber",
+    "aiReason": "Complaint requires manual admin verification.",
+    "adminNote": "",
+    "authorityNote": null,
+    "deadline": "2026-08-28T05:13:25.739Z",
+    "dataShareConsent": null,
+    "deadline_notified": false,
+    "timeline": [
+      {
+        "step": "submitted",
+        "timestamp": "2026-08-19T17:26:39.339Z",
+        "note": "Complaint registered successfully"
+      },
+      {
+        "step": "ai_review",
+        "timestamp": "2026-08-19T17:26:41.841Z",
+        "note": "AI analyzing complaint for validity and relevance…"
+      },
+      {
+        "step": "admin_review",
+        "timestamp": "2026-08-19T17:26:44.843Z",
+        "note": "AI classified as AMBER. Forwarded to admin."
+      },
+      {
+        "step": "authority_review",
+        "timestamp": "2026-08-20T05:13:25.739Z",
+        "note": "Validated by admin. Forwarded to authority."
+      }
+    ],
+    "createdAt": "2026-08-19T17:26:39.339Z",
+    "updatedAt": "2026-08-20T05:13:25.739Z"
+  },
+  {
+    "id": "CS60399340",
+    "userId": "mt0d3jikgd8iw",
+    "anonymousId": "unknown567",
+    "name": "HR User",
+    "department": "Human Resources",
+    "heading": "Staffing Misallocation",
+    "description": "Severe understaffing in emergency response team leading to delayed response.",
+    "location": "HR HQ",
+    "coords": null,
+    "files": [],
+    "status": "authority_review",
+    "ragTag": "amber",
+    "aiReason": "Complaint requires manual admin verification.",
+    "adminNote": "",
+    "authorityNote": null,
+    "deadline": "2026-08-28T05:13:30.803Z",
+    "dataShareConsent": null,
+    "deadline_notified": false,
+    "timeline": [
+      {
+        "step": "submitted",
+        "timestamp": "2026-08-19T17:26:39.340Z",
+        "note": "Complaint registered successfully"
+      },
+      {
+        "step": "ai_review",
+        "timestamp": "2026-08-19T17:26:41.842Z",
+        "note": "AI analyzing complaint for validity and relevance…"
+      },
+      {
+        "step": "admin_review",
+        "timestamp": "2026-08-19T17:26:44.844Z",
+        "note": "AI classified as AMBER. Forwarded to admin."
+      },
+      {
+        "step": "authority_review",
+        "timestamp": "2026-08-20T05:13:30.803Z",
+        "note": "Validated by admin. Forwarded to authority."
+      }
+    ],
+    "createdAt": "2026-08-19T17:26:39.340Z",
+    "updatedAt": "2026-08-20T05:13:30.803Z"
+  },
+  {
+    "id": "CS60866442",
+    "userId": "mt0cqm9pc6ck0",
+    "anonymousId": "unknown0000",
+    "name": "Tarun G",
+    "department": "Administration",
+    "heading": "college",
+    "description": "having fees issue in college they are not giving my original marks cards",
+    "location": "Jyothi Nagar, Bikanahalli, Chikkamagaluru taluku, Chikkamagaluru, Karnataka, 577101, India",
+    "coords": {
+      "lat": 13.334547257064427,
+      "lng": 75.80464325531345
+    },
+    "files": [],
+    "status": "admin_review",
+    "ragTag": "amber",
+    "aiReason": "Complaint requires manual admin verification.",
+    "adminNote": null,
+    "authorityNote": null,
+    "deadline": null,
+    "dataShareConsent": null,
+    "deadline_notified": false,
+    "timeline": [
+      {
+        "step": "submitted",
+        "timestamp": "2026-08-19T17:34:26.442Z",
+        "note": "Complaint registered successfully"
+      },
+      {
+        "step": "ai_review",
+        "timestamp": "2026-08-19T17:34:28.945Z",
+        "note": "AI analyzing complaint for validity and relevance…"
+      },
+      {
+        "step": "admin_review",
+        "timestamp": "2026-08-19T17:34:31.947Z",
+        "note": "AI classified as AMBER. Forwarded to admin."
+      }
+    ],
+    "createdAt": "2026-08-19T17:34:26.442Z",
+    "updatedAt": "2026-08-19T17:34:31.947Z"
+  },
+  {
+    "id": "CS61475002",
+    "userId": "mt0d3jikgd8iw",
+    "anonymousId": "anon1",
+    "name": "HR Staff",
+    "department": "Human Resources",
+    "heading": "HR Policy Inquiry",
+    "description": "Detailed leave policy clarification needed for HR team.",
+    "location": "HR Office",
+    "coords": null,
+    "files": [],
+    "status": "AI_ROUTED",
+    "ragTag": "green",
+    "aiReason": null,
+    "adminNote": null,
+    "authorityNote": null,
+    "deadline": null,
+    "dataShareConsent": null,
+    "deadline_notified": false,
+    "timeline": [
+      {
+        "step": "submitted",
+        "timestamp": "2026-08-19T17:44:35.002Z",
+        "note": "Complaint registered successfully"
+      },
+      {
+        "step": "ANALYZING",
+        "timestamp": "2026-08-19T17:44:35.103Z",
+        "note": "AI analyzing complaint and determining department routing…"
+      },
+      {
+        "step": "AI_ROUTED",
+        "timestamp": "2026-08-19T17:44:35.104Z",
+        "note": "AI processed complaint: Assigned to Human Resources based on analysis of \"HR Policy Inquiry\"."
+      }
+    ],
+    "createdAt": "2026-08-19T17:44:35.002Z",
+    "updatedAt": "2026-08-19T17:44:35.104Z",
+    "predictedDepartment": "Human Resources",
+    "departmentConfidence": 0.95,
+    "categoryConfidence": 0.8999999999999999,
+    "urgency": "MEDIUM",
+    "priority": "MEDIUM",
+    "safetyFlag": false,
+    "aiExplanation": "Assigned to Human Resources based on analysis of \"HR Policy Inquiry\".",
+    "analysisData": {
+      "summary": "HR Policy Inquiry",
+      "category": "Human Resources",
+      "subcategory": "Human Resources Service Issue",
+      "predictedDepartment": "Human Resources",
+      "departmentConfidence": 0.95,
+      "categoryConfidence": 0.8999999999999999,
+      "urgency": "MEDIUM",
+      "priority": "MEDIUM",
+      "completenessScore": 0.95,
+      "duplicateProbability": 0.02,
+      "safetyFlag": false,
+      "requiresClarification": false,
+      "alternativeDepartments": [
+        {
+          "department": "Human Resources",
+          "confidence": 0.9
+        },
+        {
+          "department": "Administration",
+          "confidence": 0.9
+        }
+      ],
+      "explanation": "Assigned to Human Resources based on analysis of \"HR Policy Inquiry\".",
+      "missingInformation": [],
+      "recommendedNextAction": "Auto-route to Human Resources"
+    }
+  },
+  {
+    "id": "CS61475003",
+    "userId": "mt0d3jijtgz8z",
+    "anonymousId": "anon2",
+    "name": "Finance Staff",
+    "department": "Finance",
+    "heading": "Tax Audit Document",
+    "description": "Tax audit filing for annual review.",
+    "location": "Finance HQ",
+    "coords": null,
+    "files": [],
+    "status": "AI_ROUTED",
+    "ragTag": "green",
+    "aiReason": null,
+    "adminNote": null,
+    "authorityNote": null,
+    "deadline": null,
+    "dataShareConsent": null,
+    "deadline_notified": false,
+    "timeline": [
+      {
+        "step": "submitted",
+        "timestamp": "2026-08-19T17:44:35.003Z",
+        "note": "Complaint registered successfully"
+      },
+      {
+        "step": "ANALYZING",
+        "timestamp": "2026-08-19T17:44:35.104Z",
+        "note": "AI analyzing complaint and determining department routing…"
+      },
+      {
+        "step": "AI_ROUTED",
+        "timestamp": "2026-08-19T17:44:35.104Z",
+        "note": "AI processed complaint: Assigned to Finance based on analysis of \"Tax Audit Document\"."
+      }
+    ],
+    "createdAt": "2026-08-19T17:44:35.003Z",
+    "updatedAt": "2026-08-19T17:44:35.104Z",
+    "predictedDepartment": "Finance",
+    "departmentConfidence": 0.95,
+    "categoryConfidence": 0.8999999999999999,
+    "urgency": "MEDIUM",
+    "priority": "MEDIUM",
+    "safetyFlag": false,
+    "aiExplanation": "Assigned to Finance based on analysis of \"Tax Audit Document\".",
+    "analysisData": {
+      "summary": "Tax Audit Document",
+      "category": "Finance",
+      "subcategory": "Finance Service Issue",
+      "predictedDepartment": "Finance",
+      "departmentConfidence": 0.95,
+      "categoryConfidence": 0.8999999999999999,
+      "urgency": "MEDIUM",
+      "priority": "MEDIUM",
+      "completenessScore": 0.5,
+      "duplicateProbability": 0.02,
+      "safetyFlag": false,
+      "requiresClarification": false,
+      "alternativeDepartments": [
+        {
+          "department": "Finance",
+          "confidence": 0.9
+        }
+      ],
+      "explanation": "Assigned to Finance based on analysis of \"Tax Audit Document\".",
+      "missingInformation": [
+        "Additional details about the incident or location"
+      ],
+      "recommendedNextAction": "Auto-route to Finance"
+    }
+  },
+  {
+    "id": "CS61789023",
+    "userId": "mt0cqm9pc6ck0",
+    "anonymousId": "unknown0000",
+    "name": "Tarun G",
+    "department": "Police/Safety",
+    "heading": "Broken road pothole near junction",
+    "description": "Dangerous deep pothole on MG road near bridge causing traffic block.",
+    "location": "Jyothi Nagar, Bikanahalli, Chikkamagaluru taluku, Chikkamagaluru, Karnataka, 577101, India",
+    "coords": {
+      "lat": 13.333934811492634,
+      "lng": 75.80468759029209
+    },
+    "files": [],
+    "status": "ROUTING_REVIEW",
+    "ragTag": "red",
+    "aiReason": null,
+    "adminNote": null,
+    "authorityNote": null,
+    "deadline": null,
+    "dataShareConsent": null,
+    "deadline_notified": false,
+    "timeline": [
+      {
+        "step": "submitted",
+        "timestamp": "2026-08-19T17:49:49.023Z",
+        "note": "Complaint registered successfully"
+      },
+      {
+        "step": "ANALYZING",
+        "timestamp": "2026-08-19T17:49:49.125Z",
+        "note": "AI analyzing complaint and determining department routing…"
+      },
+      {
+        "step": "ROUTING_REVIEW",
+        "timestamp": "2026-08-19T17:49:49.126Z",
+        "note": "AI processed complaint: Flagged for Police/Safety due to safety-sensitive keywords in complaint."
+      }
+    ],
+    "createdAt": "2026-08-19T17:49:49.023Z",
+    "updatedAt": "2026-08-19T17:49:49.126Z",
+    "predictedDepartment": "Police/Safety",
+    "departmentConfidence": 0.98,
+    "categoryConfidence": 0.95,
+    "urgency": "CRITICAL",
+    "priority": "CRITICAL",
+    "safetyFlag": true,
+    "aiExplanation": "Flagged for Police/Safety due to safety-sensitive keywords in complaint.",
+    "analysisData": {
+      "summary": "Broken road pothole near junction",
+      "category": "Safety & Security",
+      "subcategory": "Emergency / Safety Concern",
+      "predictedDepartment": "Police/Safety",
+      "departmentConfidence": 0.98,
+      "categoryConfidence": 0.95,
+      "urgency": "CRITICAL",
+      "priority": "CRITICAL",
+      "completenessScore": 0.9,
+      "duplicateProbability": 0.05,
+      "safetyFlag": true,
+      "requiresClarification": false,
+      "alternativeDepartments": [
+        {
+          "department": "Administration",
+          "confidence": 0.2
+        }
+      ],
+      "explanation": "Flagged for Police/Safety due to safety-sensitive keywords in complaint.",
+      "missingInformation": [],
+      "recommendedNextAction": "Escalate to emergency safety team immediately."
+    }
+  },
+  {
+    "id": "CS62188293",
+    "userId": "mt0d3jikgd8iw",
+    "anonymousId": "anon1",
+    "name": "HR Staff",
+    "department": "Human Resources",
+    "heading": "HR Policy Inquiry",
+    "description": "Detailed leave policy clarification needed for HR team.",
+    "location": "HR Office",
+    "coords": null,
+    "files": [],
+    "status": "AI_ROUTED",
+    "ragTag": "green",
+    "aiReason": null,
+    "adminNote": null,
+    "authorityNote": null,
+    "deadline": null,
+    "dataShareConsent": null,
+    "deadline_notified": false,
+    "timeline": [
+      {
+        "step": "submitted",
+        "timestamp": "2026-08-19T17:56:28.293Z",
+        "note": "Complaint registered successfully"
+      },
+      {
+        "step": "ANALYZING",
+        "timestamp": "2026-08-19T17:56:28.395Z",
+        "note": "AI analyzing complaint and determining department routing…"
+      },
+      {
+        "step": "AI_ROUTED",
+        "timestamp": "2026-08-19T17:56:28.396Z",
+        "note": "AI processed complaint: Assigned to Human Resources based on analysis of \"HR Policy Inquiry\"."
+      }
+    ],
+    "createdAt": "2026-08-19T17:56:28.293Z",
+    "updatedAt": "2026-08-19T17:56:28.396Z",
+    "predictedDepartment": "Human Resources",
+    "departmentConfidence": 0.95,
+    "categoryConfidence": 0.8999999999999999,
+    "urgency": "MEDIUM",
+    "priority": "MEDIUM",
+    "safetyFlag": false,
+    "aiExplanation": "Assigned to Human Resources based on analysis of \"HR Policy Inquiry\".",
+    "analysisData": {
+      "summary": "HR Policy Inquiry",
+      "category": "Human Resources",
+      "subcategory": "Human Resources Service Issue",
+      "predictedDepartment": "Human Resources",
+      "departmentConfidence": 0.95,
+      "categoryConfidence": 0.8999999999999999,
+      "urgency": "MEDIUM",
+      "priority": "MEDIUM",
+      "completenessScore": 0.95,
+      "duplicateProbability": 0.02,
+      "safetyFlag": false,
+      "requiresClarification": false,
+      "alternativeDepartments": [
+        {
+          "department": "Human Resources",
+          "confidence": 0.9
+        },
+        {
+          "department": "Administration",
+          "confidence": 0.9
+        }
+      ],
+      "explanation": "Assigned to Human Resources based on analysis of \"HR Policy Inquiry\".",
+      "missingInformation": [],
+      "recommendedNextAction": "Auto-route to Human Resources"
+    }
+  },
+  {
+    "id": "CS62188294",
+    "userId": "mt0d3jijtgz8z",
+    "anonymousId": "anon_fin",
+    "name": "Finance Staff",
+    "department": "Public Works",
+    "heading": "Pothole on My Street",
+    "description": "Deep pothole outside my house causing inconvenience.",
+    "location": "Residential Area",
+    "coords": null,
+    "files": [],
+    "status": "AI_ROUTED_REVIEW_RECOMMENDED",
+    "ragTag": "amber",
+    "aiReason": null,
+    "adminNote": null,
+    "authorityNote": null,
+    "deadline": null,
+    "dataShareConsent": null,
+    "deadline_notified": false,
+    "timeline": [
+      {
+        "step": "submitted",
+        "timestamp": "2026-08-19T17:56:28.294Z",
+        "note": "Complaint registered successfully"
+      },
+      {
+        "step": "ANALYZING",
+        "timestamp": "2026-08-19T17:56:28.396Z",
+        "note": "AI analyzing complaint and determining department routing…"
+      },
+      {
+        "step": "AI_ROUTED_REVIEW_RECOMMENDED",
+        "timestamp": "2026-08-19T17:56:28.397Z",
+        "note": "AI processed complaint: Assigned to Public Works based on analysis of \"Pothole on My Street\"."
+      }
+    ],
+    "createdAt": "2026-08-19T17:56:28.294Z",
+    "updatedAt": "2026-08-19T17:56:28.397Z",
+    "predictedDepartment": "Public Works",
+    "departmentConfidence": 0.72,
+    "categoryConfidence": 0.6699999999999999,
+    "urgency": "MEDIUM",
+    "priority": "MEDIUM",
+    "safetyFlag": false,
+    "aiExplanation": "Assigned to Public Works based on analysis of \"Pothole on My Street\".",
+    "analysisData": {
+      "summary": "Pothole on My Street",
+      "category": "Public Works",
+      "subcategory": "Public Works Service Issue",
+      "predictedDepartment": "Public Works",
+      "departmentConfidence": 0.72,
+      "categoryConfidence": 0.6699999999999999,
+      "urgency": "MEDIUM",
+      "priority": "MEDIUM",
+      "completenessScore": 0.95,
+      "duplicateProbability": 0.02,
+      "safetyFlag": false,
+      "requiresClarification": false,
+      "alternativeDepartments": [
+        {
+          "department": "Public Works",
+          "confidence": 0.5
+        },
+        {
+          "department": "Environment",
+          "confidence": 0.5
+        }
+      ],
+      "explanation": "Assigned to Public Works based on analysis of \"Pothole on My Street\".",
+      "missingInformation": [],
+      "recommendedNextAction": "Review recommended"
+    }
+  },
+  {
+    "id": "CS62188296",
+    "userId": "OTHER_USER_ID",
+    "anonymousId": "anon_other",
+    "name": "Other Colleague",
+    "department": "Finance",
+    "heading": "Finance Dept Audit File",
+    "description": "Internal financial audit record for department review.",
+    "location": "Finance Office",
+    "coords": null,
+    "files": [],
+    "status": "AI_ROUTED",
+    "ragTag": "green",
+    "aiReason": null,
+    "adminNote": null,
+    "authorityNote": null,
+    "deadline": null,
+    "dataShareConsent": null,
+    "deadline_notified": false,
+    "timeline": [
+      {
+        "step": "submitted",
+        "timestamp": "2026-08-19T17:56:28.296Z",
+        "note": "Complaint registered successfully"
+      },
+      {
+        "step": "ANALYZING",
+        "timestamp": "2026-08-19T17:56:28.397Z",
+        "note": "AI analyzing complaint and determining department routing…"
+      },
+      {
+        "step": "AI_ROUTED",
+        "timestamp": "2026-08-19T17:56:28.397Z",
+        "note": "AI processed complaint: Assigned to Finance based on analysis of \"Finance Dept Audit File\"."
+      }
+    ],
+    "createdAt": "2026-08-19T17:56:28.296Z",
+    "updatedAt": "2026-08-19T17:56:28.397Z",
+    "predictedDepartment": "Finance",
+    "departmentConfidence": 0.95,
+    "categoryConfidence": 0.8999999999999999,
+    "urgency": "MEDIUM",
+    "priority": "MEDIUM",
+    "safetyFlag": false,
+    "aiExplanation": "Assigned to Finance based on analysis of \"Finance Dept Audit File\".",
+    "analysisData": {
+      "summary": "Finance Dept Audit File",
+      "category": "Finance",
+      "subcategory": "Finance Service Issue",
+      "predictedDepartment": "Finance",
+      "departmentConfidence": 0.95,
+      "categoryConfidence": 0.8999999999999999,
+      "urgency": "MEDIUM",
+      "priority": "MEDIUM",
+      "completenessScore": 0.95,
+      "duplicateProbability": 0.02,
+      "safetyFlag": false,
+      "requiresClarification": false,
+      "alternativeDepartments": [
+        {
+          "department": "Finance",
+          "confidence": 0.9
+        },
+        {
+          "department": "Administration",
+          "confidence": 0.5
+        }
+      ],
+      "explanation": "Assigned to Finance based on analysis of \"Finance Dept Audit File\".",
+      "missingInformation": [],
+      "recommendedNextAction": "Auto-route to Finance"
+    }
+  },
+  {
+    "id": "CS62188298",
+    "userId": "mt0d3jijtgz8z",
+    "anonymousId": "anon2",
+    "name": "Finance Staff",
+    "department": "Finance",
+    "heading": "Tax Audit Document",
+    "description": "Tax audit filing for annual review.",
+    "location": "Finance HQ",
+    "coords": null,
+    "files": [],
+    "status": "AI_ROUTED",
+    "ragTag": "green",
+    "aiReason": null,
+    "adminNote": null,
+    "authorityNote": null,
+    "deadline": null,
+    "dataShareConsent": null,
+    "deadline_notified": false,
+    "timeline": [
+      {
+        "step": "submitted",
+        "timestamp": "2026-08-19T17:56:28.298Z",
+        "note": "Complaint registered successfully"
+      },
+      {
+        "step": "ANALYZING",
+        "timestamp": "2026-08-19T17:56:28.399Z",
+        "note": "AI analyzing complaint and determining department routing…"
+      },
+      {
+        "step": "AI_ROUTED",
+        "timestamp": "2026-08-19T17:56:28.399Z",
+        "note": "AI processed complaint: Assigned to Finance based on analysis of \"Tax Audit Document\"."
+      }
+    ],
+    "createdAt": "2026-08-19T17:56:28.298Z",
+    "updatedAt": "2026-08-19T17:56:28.399Z",
+    "predictedDepartment": "Finance",
+    "departmentConfidence": 0.95,
+    "categoryConfidence": 0.8999999999999999,
+    "urgency": "MEDIUM",
+    "priority": "MEDIUM",
+    "safetyFlag": false,
+    "aiExplanation": "Assigned to Finance based on analysis of \"Tax Audit Document\".",
+    "analysisData": {
+      "summary": "Tax Audit Document",
+      "category": "Finance",
+      "subcategory": "Finance Service Issue",
+      "predictedDepartment": "Finance",
+      "departmentConfidence": 0.95,
+      "categoryConfidence": 0.8999999999999999,
+      "urgency": "MEDIUM",
+      "priority": "MEDIUM",
+      "completenessScore": 0.5,
+      "duplicateProbability": 0.02,
+      "safetyFlag": false,
+      "requiresClarification": false,
+      "alternativeDepartments": [
+        {
+          "department": "Finance",
+          "confidence": 0.9
+        }
+      ],
+      "explanation": "Assigned to Finance based on analysis of \"Tax Audit Document\".",
+      "missingInformation": [
+        "Additional details about the incident or location"
+      ],
+      "recommendedNextAction": "Auto-route to Finance"
+    }
+  },
+  {
+    "id": "CS03484279",
+    "userId": "mt0cqm9pc6ck0",
+    "anonymousId": "unknown0000",
+    "name": "Tarun G",
+    "department": "Human Resources",
+    "heading": "Money Recovery",
+    "description": "To the Officer-in-Charge, [Name of Police Station/Authority], [City, State]. I am writing to formally lodge a complaint against [Debtor's Full Name], residing at [Debtor's Address], for the non-repayment of a financial loan. On [Date of Loan], the accused approached me seeking financial assistance for [State Reason, e.g., business expansion/personal emergency]. Trusting their assurance of timely repayment, I advanced a sum of [Amount in Numbers] ([Amount in Words]) through [Mention Mode: Bank Transfer/Cheque/Cash] on [Date of Payment]. As per our mutual agreement, the accused explicitly promised to return the entire amount along with the agreed interest of [Interest Rate, if any] on or before [11/11/2026].",
+    "location": "Jyothi Nagar, Bikanahalli, Chikkamagaluru taluku, Chikkamagaluru, Karnataka, 577101, India",
+    "coords": {
+      "lat": 13.334232523056459,
+      "lng": 75.80508139421106
+    },
+    "files": [],
+    "status": "AI_ROUTED",
+    "ragTag": "green",
+    "aiReason": null,
+    "adminNote": null,
+    "authorityNote": null,
+    "deadline": null,
+    "dataShareConsent": null,
+    "deadline_notified": false,
+    "timeline": [
+      {
+        "step": "submitted",
+        "timestamp": "2026-08-20T05:24:44.279Z",
+        "note": "Complaint registered successfully"
+      },
+      {
+        "step": "ANALYZING",
+        "timestamp": "2026-08-20T05:24:44.382Z",
+        "note": "AI analyzing complaint and determining department routing…"
+      },
+      {
+        "step": "AI_ROUTED",
+        "timestamp": "2026-08-20T05:24:44.386Z",
+        "note": "AI processed complaint: Assigned to Human Resources based on analysis of \"Money Recovery\"."
+      }
+    ],
+    "createdAt": "2026-08-20T05:24:44.279Z",
+    "updatedAt": "2026-08-20T05:24:44.386Z",
+    "predictedDepartment": "Human Resources",
+    "departmentConfidence": 0.95,
+    "categoryConfidence": 0.8999999999999999,
+    "urgency": "MEDIUM",
+    "priority": "MEDIUM",
+    "safetyFlag": false,
+    "aiExplanation": "Assigned to Human Resources based on analysis of \"Money Recovery\".",
+    "analysisData": {
+      "summary": "Money Recovery",
+      "category": "Human Resources",
+      "subcategory": "Human Resources Service Issue",
+      "predictedDepartment": "Human Resources",
+      "departmentConfidence": 0.95,
+      "categoryConfidence": 0.8999999999999999,
+      "urgency": "MEDIUM",
+      "priority": "MEDIUM",
+      "completenessScore": 0.95,
+      "duplicateProbability": 0.02,
+      "safetyFlag": false,
+      "requiresClarification": false,
+      "alternativeDepartments": [
+        {
+          "department": "Human Resources",
+          "confidence": 0.9
+        },
+        {
+          "department": "Police/Safety",
+          "confidence": 0.5
+        }
+      ],
+      "explanation": "Assigned to Human Resources based on analysis of \"Money Recovery\".",
+      "missingInformation": [],
+      "recommendedNextAction": "Auto-route to Human Resources"
+    }
+  },
+  {
+    "id": "CS18172093",
+    "userId": "mt0cqm9pc6ck0",
+    "anonymousId": "unknown0000",
+    "name": "Tarun ",
+    "department": "Legal",
+    "heading": "broken street ligth",
+    "description": "the ligths are broken accedent is happening so please take any good action so no more accedent can happen",
+    "location": "Vemana Institute of Technology",
+    "coords": null,
+    "files": [],
+    "status": "submitted",
+    "ragTag": null,
+    "aiReason": null,
+    "adminNote": null,
+    "authorityNote": null,
+    "deadline": null,
+    "dataShareConsent": null,
+    "deadline_notified": false,
+    "timeline": [
+      {
+        "step": "submitted",
+        "timestamp": "2026-08-20T09:29:32.093Z",
+        "note": "Complaint registered successfully"
+      }
+    ],
+    "createdAt": "2026-08-20T09:29:32.093Z",
+    "updatedAt": "2026-08-20T09:29:32.093Z"
+  },
+  {
+    "id": "CS18437356",
+    "userId": "mt1bf6h8j0p3w",
+    "anonymousId": "unknown0011",
+    "name": "Likeeth ",
+    "department": "Human Resources",
+    "heading": "lack of road ",
+    "description": "the lack of road acuses the accedent and i have also got with the accedt",
+    "location": "Jain University, BWSSB Pipeline Track, Jakkasandra, Harohalli taluk, Bengaluru South, Karnataka, 562112, India",
+    "coords": null,
+    "files": [],
+    "status": "submitted",
+    "ragTag": null,
+    "aiReason": null,
+    "adminNote": null,
+    "authorityNote": null,
+    "deadline": null,
+    "dataShareConsent": null,
+    "deadline_notified": false,
+    "timeline": [
+      {
+        "step": "submitted",
+        "timestamp": "2026-08-20T09:33:57.356Z",
+        "note": "Complaint registered successfully"
+      }
+    ],
+    "createdAt": "2026-08-20T09:33:57.356Z",
+    "updatedAt": "2026-08-20T09:33:57.356Z"
+  },
+  {
+    "id": "CS18927303",
+    "userId": "mt1bf6h8j0p3w",
+    "anonymousId": "unknown0011",
+    "name": "Likeeth ",
+    "department": "Human Resources",
+    "heading": "road accident and pot holes",
+    "description": "daadasdsafdsfsfsedg dfshgyjjughdfetkjghfdsa asjnyjhyuj7ubt yuh6yh",
+    "location": "Vemana Institute of Technology",
+    "coords": null,
+    "files": [
+      "IMG_5696.HEIC"
+    ],
+    "status": "submitted",
+    "ragTag": null,
+    "aiReason": null,
+    "adminNote": null,
+    "authorityNote": null,
+    "deadline": null,
+    "dataShareConsent": null,
+    "deadline_notified": false,
+    "timeline": [
+      {
+        "step": "submitted",
+        "timestamp": "2026-08-20T09:42:07.303Z",
+        "note": "Complaint registered successfully"
+      }
+    ],
+    "createdAt": "2026-08-20T09:42:07.303Z",
+    "updatedAt": "2026-08-20T09:42:07.303Z"
+  },
+  {
+    "id": "CS19213098",
+    "userId": "mt1c4b7cp2lmj",
+    "anonymousId": "unknown4567",
+    "name": "tarun",
+    "department": "Human Resources",
+    "heading": "Users are experiencing difficulties while using the project website due to slow page loading, unclea",
+    "description": "The main concern is that the website does not always provide a smooth and reliable user experience. Some pages take a long time to load, while certain buttons, links, or forms may not respond correctly. In some cases, users may enter information into a form but receive unclear error messages or may not know whether their submission was successfully completed. The navigation structure could also be improved so that users can easily understand where to find the required information and how to move between different sections of the website. These problems can cause confusion, frustration, and unnecessary delays for users. The website should therefore be reviewed carefully to identify performance issues, broken links, validation problems, and usability concerns. Improving the page-loading speed, providing clear instructions and error messages, making the interface responsive across different screen sizes, and ensuring that all forms and buttons function correctly would significantly improve the overall quality of the project. Addressing these issues would make the website more user-friendly, accessible, reliable, and professional, while also helping users complete their intended tasks more efficiently.",
+    "location": "Adichunchanagiri Institute of Technology, AIT College Road, Jyothi Nagar, Bikanahalli, Chikkamagaluru taluku, Chikkamagaluru, Karnataka, 577101, India",
+    "coords": {
+      "lat": 13.340252053260683,
+      "lng": 75.79809557115118
+    },
+    "files": [
+      "IMG_5696.HEIC"
+    ],
+    "status": "submitted",
+    "ragTag": null,
+    "aiReason": null,
+    "adminNote": null,
+    "authorityNote": null,
+    "deadline": null,
+    "dataShareConsent": null,
+    "deadline_notified": false,
+    "timeline": [
+      {
+        "step": "submitted",
+        "timestamp": "2026-08-20T09:46:53.098Z",
+        "note": "Complaint registered successfully"
+      }
+    ],
+    "createdAt": "2026-08-20T09:46:53.098Z",
+    "updatedAt": "2026-08-20T09:46:53.098Z"
+  }
+]

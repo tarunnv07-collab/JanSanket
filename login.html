@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login — JanSanket</title>
+    <link rel="stylesheet" href="css/main.css" />
+    <style>
+        .auth-wrapper {
+            min-height: 100vh;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+        }
+
+        .auth-panel-left {
+            background: linear-gradient(160deg, var(--color-bg-2), var(--color-bg-3));
+            border-right: 1px solid var(--color-border);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 60px 48px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .auth-panel-left::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at 30% 60%, hsla(0, 85%, 55%, 0.1), transparent 60%);
+        }
+
+        .auth-panel-right {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 48px;
+        }
+
+        .auth-form-box {
+            width: 100%;
+            max-width: 380px;
+        }
+
+        .role-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px 12px;
+            border-radius: var(--radius-full);
+            font-size: 0.75rem;
+            font-weight: 600;
+            border: 1px solid var(--color-border);
+            color: var(--color-text-3);
+        }
+
+        .otp-badge {
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            color: #ef4444;
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-size: 0.82rem;
+            font-weight: 600;
+            margin-top: 6px;
+            display: none;
+        }
+
+        @media (max-width: 768px) {
+            .auth-wrapper {
+                grid-template-columns: 1fr;
+            }
+
+            .auth-panel-left {
+                display: none;
+            }
+
+            .auth-panel-right {
+                padding: 24px 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="auth-wrapper">
+        <div class="auth-panel-left">
+            <div style="position:relative;z-index:1;">
+                <a href="index.html" class="nav-logo" style="margin-bottom:40px;display:inline-flex;">
+                    <div class="logo-icon">🛡️</div> JanSanket
+                </a>
+                <h2 style="font-size:2rem;margin-bottom:16px;">Welcome<br /><span class="text-accent">Back</span></h2>
+                <p style="margin-bottom:32px;">Log in to track your complaints, view notifications, and manage your
+                    civic engagement.</p>
+                <div style="display:flex;flex-direction:column;gap:10px;">
+                    <div
+                        style="font-size:0.78rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--color-text-3);margin-bottom:4px;">
+                        Available Roles</div>
+                    <div class="role-tag">👤 Citizen — your Voter ID & Password / OTP</div>
+                    <div class="role-tag">🏛️ Admin — ID: ADMIN0001 | Pass: admin123</div>
+                    <div class="role-tag">⚖️ Authority — ID: AUTH0001 | Pass: auth123</div>
+                </div>
+            </div>
+        </div>
+        <div class="auth-panel-right">
+            <div class="auth-form-box">
+                <div style="margin-bottom:28px;">
+                    <div style="font-size:2.5rem;margin-bottom:12px;">🛡️</div>
+                    <h3 style="font-size:1.6rem;">Sign In</h3>
+                    <p style="margin-top:6px;">Enter your Voter ID & password or phone number</p>
+                </div>
+
+                <form id="loginForm" novalidate style="display:flex;flex-direction:column;gap:16px;">
+                    <div class="form-group">
+                        <label class="form-label">Voter ID / Phone Number <span class="text-accent">*</span></label>
+                        <input id="voterId" class="form-input" placeholder="e.g. ABC1234567 · ADMIN0001 · AUTH0001"
+                            style="text-transform:uppercase;letter-spacing:1px;font-size:1rem;" />
+                        <span id="voterIdErr" class="form-error hidden"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Password <span class="text-accent">*</span></label>
+                        <input id="password" type="password" class="form-input" placeholder="Enter your password"
+                            style="font-size:1rem;" />
+                        <span id="passErr" class="form-error hidden"></span>
+                    </div>
+
+                    <button type="submit" id="loginBtn" class="btn btn-primary btn-full" style="padding:13px;">
+                        🔐 Log In
+                    </button>
+                </form>
+
+                <div class="divider-text">new here?</div>
+                <a href="register.html" class="btn btn-ghost btn-full">Create an Account →</a>
+                <a href="index.html"
+                    style="display:block;text-align:center;margin-top:14px;font-size:0.82rem;color:var(--color-text-3);">←
+                    Back to Home</a>
+            </div>
+        </div>
+    </div>
+
+    <script type="module">
+        import { handleLogin } from './js/auth.js';
+        import { seedDefaults } from './js/store.js';
+        seedDefaults();
+
+        const form = document.getElementById('loginForm');
+        const input = document.getElementById('voterId');
+        form.addEventListener('submit', handleLogin);
+        input.addEventListener('input', function () { this.value = this.value.toUpperCase(); });
+    </script>
+</body>
+
+</html>

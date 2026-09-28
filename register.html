@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Create Account — JanSanket</title>
+    <link rel="stylesheet" href="css/main.css" />
+    <style>
+        .auth-wrapper {
+            min-height: 100vh;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+        }
+
+        .auth-panel-left {
+            background: linear-gradient(160deg, var(--color-bg-2) 0%, var(--color-bg-3) 100%);
+            border-right: 1px solid var(--color-border);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 60px 48px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .auth-panel-left::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at 30% 60%, hsla(0, 85%, 55%, 0.1), transparent 60%);
+        }
+
+        .auth-panel-right {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 48px;
+            overflow-y: auto;
+        }
+
+        .auth-form-box {
+            width: 100%;
+            max-width: 460px;
+        }
+
+        .otp-badge {
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            color: #ef4444;
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-size: 0.82rem;
+            font-weight: 600;
+            margin-top: 6px;
+            display: none;
+        }
+
+        @media (max-width: 768px) {
+            .auth-wrapper {
+                grid-template-columns: 1fr;
+            }
+
+            .auth-panel-left {
+                display: none;
+            }
+
+            .auth-panel-right {
+                padding: 24px 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="auth-wrapper">
+        <!-- Left Panel -->
+        <div class="auth-panel-left">
+            <div style="position:relative;z-index:1;">
+                <a href="index.html" class="nav-logo" style="margin-bottom:40px;display:inline-flex;">
+                    <div class="logo-icon">🛡️</div> JanSanket
+                </a>
+                <h2 style="margin-bottom:16px;font-size:2rem;">Join the<br /><span class="text-accent">Civic Movement</span></h2>
+                <p style="margin-bottom:32px;">Create your account to file complaints, manage departmental tasks, and track resolutions in real-time.</p>
+                <div style="display:flex;flex-direction:column;gap:14px;">
+                    <div style="display:flex;align-items:center;gap:12px;">
+                        <span style="font-size:1.3rem;width:32px;text-align:center;">🛡️</span>
+                        <span style="font-size:0.88rem;color:var(--color-text-2);">Encrypted & verified authentication</span>
+                    </div>
+                    <div style="display:flex;align-items:center;gap:12px;">
+                        <span style="font-size:1.3rem;width:32px;text-align:center;">🔑</span>
+                        <span style="font-size:0.88rem;color:var(--color-text-2);">Strict Terminal OTP Verification</span>
+                    </div>
+                    <div style="display:flex;align-items:center;gap:12px;">
+                        <span style="font-size:1.3rem;width:32px;text-align:center;">🤖</span>
+                        <span style="font-size:0.88rem;color:var(--color-text-2);">AI routes grievances to the exact department</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Panel -->
+        <div class="auth-panel-right">
+            <div class="auth-form-box">
+                <div style="margin-bottom:24px;">
+                    <h3 style="font-size:1.8rem;font-weight:800;">Create Account</h3>
+                </div>
+
+                <form id="registerForm" novalidate style="display:flex;flex-direction:column;gap:16px;">
+                    <!-- User Type -->
+                    <div class="form-group">
+                        <label for="userType" class="form-label" style="font-weight:700;">Select User Type <span class="text-accent">*</span></label>
+                        <select id="userType" class="form-select" style="font-size:0.95rem;padding:12px 14px;">
+                            <option value="public">Public / Citizen</option>
+                            <option value="official">Government Officer</option>
+                        </select>
+                    </div>
+
+                    <!-- Fields Container -->
+                    <div id="fieldsContainer" style="display:flex;flex-direction:column;gap:16px;"></div>
+
+                    <button type="submit" id="submitBtn" class="btn btn-primary btn-full" style="margin-top:8px;padding:14px;font-size:1rem;font-weight:700;">
+                        Create Public Account
+                    </button>
+                </form>
+
+                <div class="divider-text" style="margin:20px 0;">already registered?</div>
+                <a href="login.html" class="btn btn-ghost btn-full">Log In Instead →</a>
+            </div>
+        </div>
+    </div>
+
+    <script type="module">
+        import { handleRegister } from './js/auth.js';
+        import { seedDefaults } from './js/store.js';
+        seedDefaults();
+
+        const userTypeSelect = document.getElementById('userType');
+        const fieldsContainer = document.getElementById('fieldsContainer');
+        const submitBtn = document.getElementById('submitBtn');
+
+        let statesData = [];
+
+        async function loadStates() {
+            try {
+                const res = await fetch('/api/locations/states');
+                if (!res.ok) throw new Error('States fetch error');
+                const raw = await res.json();
+                statesData = raw.sort((a, b) => a.name.localeCompare(b.name));
+            } catch (e) {
+                console.error('Failed to load states', e);
+            }
+        }
+        await loadStates();
+
+        function renderStateOptions() {
+            const states = statesData.filter(s => {
+                return s.type === 'STATE' || s.type === 'State' || (!s.type && !s.name.includes('Island'));
+            }).sort((a, b) => a.name.localeCompare(b.name));
+
+            const uts = statesData.filter(s => {
+                return s.type === 'UNION_TERRITORY' || s.type === 'Union Territory';
+            }).sort((a, b) => a.name.localeCompare(b.name));
+            
+            return `
+                <option value="" disabled selected>Select State / Union Territory ▼</option>
+                <optgroup label="STATES">
+                    ${states.map(s => `<option value="${s.code}">${s.name}</option>`).join('')}
+                </optgroup>
+                <optgroup label="UNION TERRITORIES">
+                    ${uts.map(ut => `<option value="${ut.code}">${ut.name}</option>`).join('')}
+                </optgroup>
+            `;
+        }
+
+        function renderFields() {
+            const type = userTypeSelect.value;
+            if (type === 'public') {
+                submitBtn.textContent = 'Create Public Account';
+                fieldsContainer.innerHTML = `
+                    <div class="form-group">
+                        <label class="form-label">Full Name <span class="text-accent">*</span></label>
+                        <input id="name" class="form-input" placeholder="Full Name" required />
+                        <span id="nameErr" class="form-error hidden"></span>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Voter ID Number <span class="text-accent">*</span></label>
+                        <input id="voterId" class="form-input" placeholder="e.g. ABC1234567" maxlength="10" style="text-transform:uppercase;letter-spacing:1px;font-size:1rem;" required />
+                        <span id="voterIdErr" class="form-error hidden"></span>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Mobile Number <span class="text-accent">*</span></label>
+                        <div style="display:flex;gap:10px;">
+                            <input id="phone" type="tel" class="form-input" placeholder="10-digit Mobile Number" maxlength="10" style="flex:1;" required />
+                            <button type="button" id="sendOtpBtn" class="btn btn-secondary" style="white-space:nowrap;padding:0 16px;font-size:0.85rem;">Send OTP</button>
+                        </div>
+                        <span id="phoneErr" class="form-error hidden"></span>
+                        <div id="otpNotice" class="otp-badge">🔑 OTP sent to terminal! Check your running server terminal console output for the 6-digit OTP code.</div>
+                    </div>
+                    <div class="form-group hidden" id="otpGroup">
+                        <label class="form-label">Enter 6-Digit OTP Code <span class="text-accent">*</span></label>
+                        <div style="display:flex;gap:10px;">
+                            <input id="otpInput" type="text" class="form-input" placeholder="Enter OTP from terminal" maxlength="6" style="letter-spacing:3px;font-weight:700;flex:1;" />
+                            <button type="button" id="verifyOtpBtn" class="btn btn-primary" style="white-space:nowrap;padding:0 16px;font-size:0.85rem;">Verify OTP</button>
+                        </div>
+                        <span id="otpErr" class="form-error hidden"></span>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Email Address <span class="text-accent">*</span></label>
+                        <input id="email" type="email" class="form-input" placeholder="Email Address" required />
+                        <span id="emailErr" class="form-error hidden"></span>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Select State / Union Territory <span class="text-accent">*</span></label>
+                        <select id="state" class="form-select" required>${renderStateOptions()}</select>
+                        <span id="stateErr" class="form-error hidden">Please select a State or Union Territory.</span>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Select District <span class="text-accent">*</span></label>
+                        <select id="district" class="form-select" disabled required>
+                            <option value="">Please select a State / UT first</option>
+                        </select>
+                        <span id="districtStatus" style="font-size:0.78rem;color:var(--color-accent);margin-top:4px;display:none;"></span>
+                        <span id="districtErr" class="form-error hidden"></span>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Password <span class="text-accent">*</span></label>
+                        <input id="password" type="password" class="form-input" placeholder="Password" required />
+                        <span id="passErr" class="form-error hidden"></span>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Confirm Password <span class="text-accent">*</span></label>
+                        <input id="confirmPassword" type="password" class="form-input" placeholder="Confirm Password" required />
+                        <span id="confirmErr" class="form-error hidden"></span>
+                    </div>
+                    <div class="form-group" style="margin-top:4px;">
+                        <label style="display:flex;align-items:center;gap:10px;cursor:pointer;font-size:0.88rem;">
+                            <input type="checkbox" id="agreeTerms" style="width:18px;height:18px;accent-color:var(--color-accent);" required />
+                            <span>I agree to the <strong>Terms and Privacy Policy</strong></span>
+                        </label>
+                        <span id="termsErr" class="form-error hidden"></span>
+                    </div>
+                `;
+            } else {
+                submitBtn.textContent = 'Submit for Administrator Approval';
+                fieldsContainer.innerHTML = `
+                    <div class="form-group">
+                        <label class="form-label">Full Name <span class="text-accent">*</span></label>
+                        <input id="name" class="form-input" placeholder="Full Name" required />
+                        <span id="nameErr" class="form-error hidden"></span>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Voter ID Number <span class="text-accent">*</span></label>
+                        <input id="voterId" class="form-input" placeholder="e.g. ABC1234567" maxlength="10" style="text-transform:uppercase;letter-spacing:1px;font-size:1rem;" required />
+                        <span id="voterIdErr" class="form-error hidden"></span>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Employee ID <span class="text-accent">*</span></label>
+                        <input id="employeeId" class="form-input" placeholder="Employee ID" required />
+                        <span id="employeeIdErr" class="form-error hidden"></span>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Official Email <span class="text-accent">*</span></label>
+                        <input id="email" type="email" class="form-input" placeholder="Official Email" required />
+                        <span id="emailErr" class="form-error hidden"></span>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Mobile Number <span class="text-accent">*</span></label>
+                        <input id="phone" type="tel" class="form-input" placeholder="Mobile Number" maxlength="10" required />
+                        <span id="phoneErr" class="form-error hidden"></span>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Designation <span class="text-accent">*</span></label>
+                        <input id="designation" class="form-input" placeholder="Designation" required />
+                        <span id="designationErr" class="form-error hidden"></span>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Department <span class="text-accent">*</span></label>
+                        <select id="department" class="form-select" required>
+                            <option value="" disabled selected>Select Department ▼</option>
+                            <option value="Public Works Department (PWD)">Public Works Department (PWD)</option>
+                            <option value="Municipal Corporation – Solid Waste Management / Sanitation Department">Municipal Corporation – Solid Waste Management / Sanitation Department</option>
+                        </select>
+                        <span id="deptErr" class="form-error hidden"></span>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Office Level <span class="text-accent">*</span></label>
+                        <select id="officeLevel" class="form-select" required>
+                            <option value="" disabled selected>Select Office Level ▼</option>
+                            <option value="State Level">State Level</option>
+                            <option value="District Level">District Level</option>
+                            <option value="Sub-Division Level">Sub-Division Level</option>
+                            <option value="Block Level">Block Level</option>
+                            <option value="Municipal Corporation Level">Municipal Corporation Level</option>
+                        </select>
+                        <span id="officeLevelErr" class="form-error hidden"></span>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Select State / Union Territory <span class="text-accent">*</span></label>
+                        <select id="state" class="form-select" required>${renderStateOptions()}</select>
+                        <span id="stateErr" class="form-error hidden">Please select a State or Union Territory.</span>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Select District <span class="text-accent">*</span></label>
+                        <select id="district" class="form-select" disabled required>
+                            <option value="">Please select a State / UT first</option>
+                        </select>
+                        <span id="districtStatus" style="font-size:0.78rem;color:var(--color-accent);margin-top:4px;display:none;"></span>
+                        <span id="districtErr" class="form-error hidden"></span>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Password <span class="text-accent">*</span></label>
+                        <input id="password" type="password" class="form-input" placeholder="Password" required />
+                        <span id="passErr" class="form-error hidden"></span>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Confirm Password <span class="text-accent">*</span></label>
+                        <input id="confirmPassword" type="password" class="form-input" placeholder="Confirm Password" required />
+                        <span id="confirmErr" class="form-error hidden"></span>
+                    </div>
+                `;
+            }
+
+            attachStateAndDistrictListeners();
+            attachOtpListeners();
+
+            // Auto uppercase voterId input
+            const voterIdEl = document.getElementById('voterId');
+            if (voterIdEl) {
+                voterIdEl.addEventListener('input', function() {
+                    this.value = this.value.toUpperCase();
+                });
+            }
+        }
+
+        function attachOtpListeners() {
+            const sendOtpBtn = document.getElementById('sendOtpBtn');
+            const phoneInput = document.getElementById('phone');
+            const otpGroup = document.getElementById('otpGroup');
+            const otpNotice = document.getElementById('otpNotice');
+            const phoneErr = document.getElementById('phoneErr');
+            const verifyOtpBtn = document.getElementById('verifyOtpBtn');
+            const otpInput = document.getElementById('otpInput');
+            const otpErr = document.getElementById('otpErr');
+
+            if (!sendOtpBtn || !phoneInput) return;
+
+            sendOtpBtn.addEventListener('click', async () => {
+                const phone = phoneInput.value.trim();
+                if (!/^\d{10}$/.test(phone)) {
+                    if (phoneErr) {
+                        phoneErr.textContent = 'Please enter a valid 10-digit mobile number';
+                        phoneErr.classList.remove('hidden');
+                    }
+                    return;
+                }
+                if (phoneErr) phoneErr.classList.add('hidden');
+
+                sendOtpBtn.disabled = true;
+                sendOtpBtn.textContent = 'Sending...';
+
+                try {
+                    const res = await fetch('/api/auth/send-otp', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ phone })
+                    });
+                    const data = await res.json();
+
+                    sendOtpBtn.disabled = false;
+                    sendOtpBtn.textContent = 'Resend OTP';
+
+                    if (res.ok) {
+                        if (otpGroup) otpGroup.classList.remove('hidden');
+                        if (otpNotice) otpNotice.style.display = 'block';
+                    } else {
+                        if (phoneErr) {
+                            phoneErr.textContent = data.error || 'Failed to send OTP';
+                            phoneErr.classList.remove('hidden');
+                        }
+                    }
+                } catch (err) {
+                    sendOtpBtn.disabled = false;
+                    sendOtpBtn.textContent = 'Send OTP';
+                    if (phoneErr) {
+                        phoneErr.textContent = 'Error connecting to auth server';
+                        phoneErr.classList.remove('hidden');
+                    }
+                }
+            });
+
+            if (verifyOtpBtn) {
+                verifyOtpBtn.addEventListener('click', async () => {
+                    const phone = phoneInput.value.trim();
+                    const otp = otpInput ? otpInput.value.trim() : '';
+
+                    if (!otp || otp.length !== 6) {
+                        if (otpErr) {
+                            otpErr.textContent = 'Please enter the 6-digit OTP code printed in the terminal';
+                            otpErr.classList.remove('hidden');
+                        }
+                        return;
+                    }
+                    if (otpErr) otpErr.classList.add('hidden');
+
+                    try {
+                        const res = await fetch('/api/auth/verify-otp', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({ phone, otp })
+                        });
+                        const data = await res.json();
+
+                        if (res.ok) {
+                            verifyOtpBtn.textContent = '✅ Verified';
+                            verifyOtpBtn.disabled = true;
+                            verifyOtpBtn.style.background = '#22c55e';
+                            if (otpNotice) {
+                                otpNotice.style.background = 'rgba(34, 197, 94, 0.1)';
+                                otpNotice.style.borderColor = 'rgba(34, 197, 94, 0.3)';
+                                otpNotice.style.color = '#22c55e';
+                                otpNotice.textContent = '✅ OTP Verified Successfully!';
+                            }
+                        } else {
+                            if (otpErr) {
+                                otpErr.textContent = data.error || 'Invalid OTP code';
+                                otpErr.classList.remove('hidden');
+                            }
+                        }
+                    } catch (e) {
+                        if (otpErr) {
+                            otpErr.textContent = 'Server connection error';
+                            otpErr.classList.remove('hidden');
+                        }
+                    }
+                });
+            }
+        }
+
+        function attachStateAndDistrictListeners() {
+            const stateSelect = document.getElementById('state');
+            const stateErr = document.getElementById('stateErr');
+            const districtSelect = document.getElementById('district');
+            const districtStatus = document.getElementById('districtStatus');
+
+            if (!stateSelect || !districtSelect) return;
+
+            stateSelect.addEventListener('change', async () => {
+                if (stateErr) stateErr.classList.add('hidden');
+                const stateVal = stateSelect.value;
+                districtSelect.disabled = true;
+                districtSelect.innerHTML = '<option value="">⏳ Loading districts...</option>';
+                districtStatus.style.display = 'block';
+                districtStatus.textContent = '⏳ Retrieving district directory...';
+
+                if (!stateVal) {
+                    districtSelect.innerHTML = '<option value="">Please select a State / UT first</option>';
+                    districtStatus.style.display = 'none';
+                    return;
+                }
+
+                try {
+                    const res = await fetch(`/api/locations/districts?state=${encodeURIComponent(stateVal)}`);
+                    if (!res.ok) throw new Error('Unable to load districts. Please try again.');
+                    const data = await res.json();
+                    
+                    districtStatus.style.display = 'none';
+                    if (data.districts && data.districts.length > 0) {
+                        districtSelect.disabled = false;
+                        districtSelect.innerHTML = `<option value="" disabled selected>Select District ▼</option>` +
+                            data.districts.map(d => `<option value="${d.code}">${d.name}</option>`).join('');
+                    } else {
+                        districtSelect.innerHTML = '<option value="">⚠️ No districts found</option>';
+                    }
+                } catch (e) {
+                    districtStatus.style.display = 'block';
+                    districtStatus.style.color = '#ef4444';
+                    districtStatus.textContent = '⚠️ Unable to load districts. Please try again.';
+                    districtSelect.innerHTML = '<option value="">⚠️ Unable to load districts. Please try again.</option>';
+                }
+            });
+        }
+
+        renderFields();
+        userTypeSelect.addEventListener('change', renderFields);
+
+        document.getElementById('registerForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const stateSelect = document.getElementById('state');
+            const stateErr = document.getElementById('stateErr');
+            if (stateSelect && !stateSelect.value) {
+                if (stateErr) {
+                    stateErr.textContent = 'Please select a State or Union Territory.';
+                    stateErr.classList.remove('hidden');
+                }
+                return;
+            }
+            handleRegister(e);
+        });
+    </script>
+</body>
+
+</html>

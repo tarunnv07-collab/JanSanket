@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Authority Dashboard — JanSanket</title>
+    <link rel="stylesheet" href="css/main.css" />
+    <style>
+        .auth-layout {
+            display: grid;
+            grid-template-columns: 220px 1fr;
+            min-height: 100vh;
+            padding-top: 64px;
+        }
+
+        .auth-sidebar {
+            background: var(--color-bg-2);
+            border-right: 1px solid var(--color-border);
+            padding: 24px 14px;
+            position: sticky;
+            top: 64px;
+            height: calc(100vh - 64px);
+            overflow-y: auto;
+        }
+
+        .auth-sidebar-link {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 12px;
+            border-radius: var(--radius-sm);
+            color: var(--color-text-2);
+            font-size: 0.86rem;
+            font-weight: 500;
+            transition: all var(--transition);
+            cursor: pointer;
+            margin-bottom: 4px;
+        }
+
+        .auth-sidebar-link:hover,
+        .auth-sidebar-link.active {
+            background: var(--color-surface);
+            color: var(--color-text);
+        }
+
+        .auth-main {
+            padding: 28px;
+        }
+
+        @media (max-width: 900px) {
+            .auth-layout {
+                grid-template-columns: 1fr;
+            }
+
+            .auth-sidebar {
+                display: none;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <a href="#" class="nav-logo">
+                <div class="logo-icon">🛡️</div>
+                JanSanket <span
+                    style="font-size:0.7rem;background:var(--color-blue);color:#fff;padding:2px 8px;border-radius:var(--radius-full);margin-left:8px;">AUTHORITY</span>
+            </a>
+            <div class="nav-actions" style="margin-left:auto;">
+                <button class="nav-bell" id="navBell">🔔<span class="notif-badge"></span></button>
+                <button class="btn btn-ghost btn-sm" id="logoutBtn">Log Out</button>
+            </div>
+        </div>
+    </nav>
+
+    <div class="notif-panel" id="notifPanel">
+        <div class="notif-panel-header">
+            <h4>Notifications</h4><span class="notif-mark-all" id="markAllRead">Mark all read</span>
+        </div>
+        <div class="notif-list" id="notifList"></div>
+    </div>
+
+    <div class="auth-layout">
+        <aside class="auth-sidebar">
+            <div
+                style="font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--color-text-3);padding:0 12px;margin-bottom:12px;">
+                Authority Panel</div>
+            <div class="auth-sidebar-link active">⚖️ Assigned Complaints</div>
+            <div style="height:1px;background:var(--color-border);margin:12px 0;"></div>
+            <div
+                style="padding:12px;background:var(--color-surface);border-radius:var(--radius-md);font-size:0.82rem;color:var(--color-text-2);">
+                <div style="margin-bottom:4px;font-weight:600;">⏱️ SLA Policy</div>
+                You must respond to each complaint within <strong style="color:var(--color-accent);">6 working
+                    days</strong> of assignment.
+                Overdue complaints will be automatically escalated.
+            </div>
+        </aside>
+
+        <main class="auth-main">
+            <!-- Stats -->
+            <div class="grid-3" style="margin-bottom:24px;">
+                <div class="stat-card">
+                    <div class="stat-icon">📥</div>
+                    <div class="stat-value" id="aStat1">0</div>
+                    <div class="stat-label">Assigned to You</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">✅</div>
+                    <div class="stat-value" id="aStat2">0</div>
+                    <div class="stat-label">Resolved</div>
+                </div>
+                <div class="stat-card" style="border-color:var(--color-red);">
+                    <div class="stat-icon">⚠️</div>
+                    <div class="stat-value" id="aStat3" style="color:var(--color-red);">0</div>
+                    <div class="stat-label">Overdue</div>
+                </div>
+            </div>
+
+            <div style="margin-bottom:20px;">
+                <h3>Complaints Assigned to You</h3>
+                <p style="font-size:0.85rem;margin-top:4px;">Review and respond to each complaint. Mark resolved when
+                    action has been taken.</p>
+            </div>
+
+            <div id="authorityList">
+                <div style="text-align:center;padding:60px 20px;color:var(--color-text-3);">Loading…</div>
+            </div>
+        </main>
+    </div>
+
+    <script type="module">
+        import { initAuthority } from './js/authority.js';
+        import { logout } from './js/auth.js';
+        import { initNotifPanel } from './js/notification.js';
+        import { ComplaintStore } from './js/store.js';
+
+        initNotifPanel();
+        initAuthority();
+        document.getElementById('logoutBtn').addEventListener('click', logout);
+
+        // Stats loader
+        function loadStats() {
+            const all = ComplaintStore.getAll().filter(c => ['authority_review', 'resolved'].includes(c.status));
+            document.getElementById('aStat1').textContent = all.filter(c => c.status === 'authority_review').length;
+            document.getElementById('aStat2').textContent = all.filter(c => c.status === 'resolved').length;
+            document.getElementById('aStat3').textContent = all.filter(c => c.status === 'authority_review' && ComplaintStore.isDeadlinePassed(c)).length;
+        }
+        loadStats();
+        setInterval(loadStats, 12000);
+    </script>
+</body>
+
+</html>
